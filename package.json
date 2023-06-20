@@ -22,12 +22,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -49,10 +43,16 @@
     "@typechain/ethers-v6": "^0.4.0",
     "@typechain/hardhat": "^8.0.0",
     "chai": "^4.2.0",
+    "eslint-config-prettier": "^8.8.0",
     "ethers": "^6.4.0",
     "hardhat": "^2.15.0",
     "hardhat-gas-reporter": "^1.0.8",
+    "prettier": "^2.8.8",
     "solidity-coverage": "^0.8.0",
     "typechain": "^8.1.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/wajidsiddiqi/full-mint-website.git",
+  "author": "wajid <wajidsiddiqi12@gmail.com>",
+  "license": "MIT"
 }
