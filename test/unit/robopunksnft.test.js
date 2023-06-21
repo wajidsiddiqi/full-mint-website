@@ -41,6 +41,69 @@ const { assert, expect } = require("chai");
         });
       });
 
+      describe("NFT state function only owner can change to true", () => {
+        it("changes nft state to true", async () => {
+          const [owner, nonOwner] = await ethers.getSigners();
+
+          //? Ensure initial state is false
+          let nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, false);
+
+          //? Attempt to change nft state by non-owner
+          await expect(
+            roboPunksNft.connect(nonOwner).changeNftMintState(true)
+          ).to.be.revertedWith("Ownable: caller is not the owner");
+
+          //? Confirm state remains false
+          nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, false);
+
+          //? Change nft state by owner
+          const txResponse = await roboPunksNft
+            .connect(owner)
+            .changeNftMintState(true);
+          await txResponse.wait(1);
+
+          //? Confirm state is now true
+          nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, true);
+        });
+      });
+
+      describe("NFT state function only owner can change to false", () => {
+        beforeEach(async () => {
+          const txResponse = await roboPunksNft.changeNftMintState(true);
+          await txResponse.wait(1);
+        });
+
+        it("changes nft state to false", async () => {
+          const [owner, nonOwner] = await ethers.getSigners();
+
+          //? Ensure initial state is true
+          let nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, true);
+
+          //? Attempt to change nft state by non-owner
+          await expect(
+            roboPunksNft.connect(nonOwner).changeNftMintState(false)
+          ).to.be.revertedWith("Ownable: caller is not the owner");
+
+          //? Confirm state remains true
+          nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, true);
+
+          //? Change nft state by owner
+          const txResponse = await roboPunksNft
+            .connect(owner)
+            .changeNftMintState(false);
+          await txResponse.wait(1);
+
+          //? Confirm state is now false
+          nftState = await roboPunksNft.getNftState();
+          assert.equal(nftState, false);
+        });
+      });
+
       /*describe("Mint NFT", () => {
         beforeEach(async () => {
           const txResponse = await basicNft.mintNft();
