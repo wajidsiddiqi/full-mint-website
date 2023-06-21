@@ -34,7 +34,21 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = network.config.chainId;
 
-  const args = [];
+  const mintFee = ethers.utils.parseEther("0.4");
+  const totalSupply = 0;
+  const maxSupply = 8;
+  const walletLimit = 2;
+  const nftState = false;
+  const tokenURI = [];
+
+  const args = [
+    mintFee,
+    totalSupply,
+    maxSupply,
+    walletLimit,
+    nftState,
+    tokenURI,
+  ];
 
   const roboPunksNft = await deploy("RoboPunksNFT", {
     from: deployer,
