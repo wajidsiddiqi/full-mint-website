@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract RoboPunksNFT is ERC721, Ownable {
-    uint256 internal immutable i_mintPrice;
+    uint256 private immutable i_mintPrice;
     uint256 private s_totalSupply;
-    uint256 private s_maxSupply;
+    uint256 private immutable i_maxSupply;
     uint256 private immutable i_maxWalletLimit;
     bool private s_nftMintState;
-    string[] internal s_baseTokenURI;
+    string[] private s_baseTokenURI;
     mapping(address => uint256) private s_walletMints;
 
     constructor(
@@ -26,7 +26,7 @@ contract RoboPunksNFT is ERC721, Ownable {
     ) ERC721("RoboPunks", "RP") {
         i_mintPrice = _mintPrice;
         s_totalSupply = _totalSupply;
-        s_maxSupply = _maxSupply;
+        i_maxSupply = _maxSupply;
         i_maxWalletLimit = _maxWalletLimit;
         s_nftMintState = _nftMintState;
         s_baseTokenURI = _baseTokenURI;
@@ -46,7 +46,7 @@ contract RoboPunksNFT is ERC721, Ownable {
     }
 
     function getMaxSupply() public view returns (uint256) {
-        return s_maxSupply;
+        return i_maxSupply;
     }
 
     function getWalletLimit() public view returns (uint256) {
@@ -57,7 +57,9 @@ contract RoboPunksNFT is ERC721, Ownable {
         return s_nftMintState;
     }
 
-    function getNftState(address) public view returns (uint256) {
-        return s_walletMints[address];
+    function getWalletMintsLimit(
+        address walletAddress
+    ) public view returns (uint256) {
+        return s_walletMints[walletAddress];
     }
 }
