@@ -6,18 +6,11 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 error RoboPunksNFT__Withdraw_Failed();
-error RoboPunksNFT__Wrong_Mint_Value();
-error RoboPunksNFT__We_Sold_Out();
-error RoboPunksNFT__Public_Mint_Not_Enabled();
-error RoboPunksNFT__Exceeded_Max_Wallet_Limit();
 
 contract RoboPunksNFT is ERC721, Ownable {
     //* State Variables
-    using Counters for Counters.Counter;
-    Counters.Counter private s_tokenIdCounter;
     uint256 private constant PUBLIC_MINT_PRICE = 0.08 ether;
     uint256 private constant WHITELIST_MINT_PRICE = 0.04 ether;
     uint256 private s_totalSupply = 0;
@@ -42,25 +35,17 @@ contract RoboPunksNFT is ERC721, Ownable {
     }
 
     function publicMint(uint256 quantity) public payable {
-        if (!s_publicMintState) {
-            revert RoboPunksNFT__Public_Mint_Not_Enabled();
-        }
-
-        if (msg.value < PUBLIC_MINT_PRICE * quantity) {
-            revert RoboPunksNFT__Wrong_Mint_Value();
-        }
-
-        if (s_totalSupply + quantity <= MAX_SUPPLY) {
-            revert RoboPunksNFT__We_Sold_Out();
-        }
-
-        if (s_walletMints[msg.sender] + quantity <= MAX_WALLET_LIMIT) {
-            revert RoboPunksNFT__Exceeded_Max_Wallet_Limit();
-        }
+        require(s_publicMintState, "mint not enabled");
+        require(msg.value == PUBLIC_MINT_PRICE * quantity, "wrong mint value");
+        require(s_totalSupply + quantity <= MAX_SUPPLY, "we sold out");
+        require(
+            s_walletMints[msg.sender] + quantity <= MAX_WALLET_LIMIT,
+            "exceeded max wallet limit"
+        );
 
         for (uint256 i = 0; i < quantity; i++) {
-            uint256 tokenId = s_tokenIdCounter.current() + 1;
-            s_tokenIdCounter.increment();
+            uint256 tokenId = s_totalSupply + 1;
+            s_totalSupply++;
             _safeMint(msg.sender, tokenId);
         }
     }
