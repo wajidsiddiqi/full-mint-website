@@ -6,10 +6,15 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-error RoboPunksNFT__WithdrawFailed();
+error RoboPunksNFT__Withdraw_Failed();
+error RoboPunksNFT__Not_Enough_Funds();
 
 contract RoboPunksNFT is ERC721, Ownable {
+    //* State Variables
+    using Counters for Counters.Counter;
+    Counters.Counter private s_tokenIdCounter;
     uint256 private constant PUBLIC_MINT_PRICE = 0.08 ether;
     uint256 private constant WHITELIST_MINT_PRICE = 0.04 ether;
     uint256 private s_totalSupply = 0;
@@ -33,6 +38,16 @@ contract RoboPunksNFT is ERC721, Ownable {
         s_whitelistMintState = whitelistState;
     }
 
+    function publicMint() public payable {
+        if (msg.value < PUBLIC_MINT_PRICE) {
+            revert RoboPunksNFT__Not_Enough_Funds();
+        }
+
+        uint256 tokenId = s_tokenIdCounter.current();
+        s_tokenIdCounter.increment();
+        _safeMint(msg.sender, tokenId);
+    }
+
     /**@dev setting whitelists addresses*/
     function setWhitelist(address[] calldata addresses) external onlyOwner {
         for (uint i = 0; i < addresses.length; i++) {
@@ -44,7 +59,7 @@ contract RoboPunksNFT is ERC721, Ownable {
         uint256 ammount = address(this).balance;
         (bool success, ) = payable(msg.sender).call{value: ammount}("");
         if (!success) {
-            revert RoboPunksNFT__WithdrawFailed();
+            revert RoboPunksNFT__Withdraw_Failed();
         }
     }
 
