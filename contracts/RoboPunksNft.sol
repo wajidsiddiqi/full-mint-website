@@ -9,7 +9,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 error RoboPunksNFT__Withdraw_Failed();
-error RoboPunksNFT__Not_Enough_Funds();
+error RoboPunksNFT__Wrong_Mint_Value();
+error RoboPunksNFT__We_Sold_Out();
+error RoboPunksNFT__Public_Mint_Not_Enabled();
+error RoboPunksNFT__Exceeded_Max_Wallet_Limit();
 
 contract RoboPunksNFT is ERC721, Ownable {
     //* State Variables
@@ -38,19 +41,33 @@ contract RoboPunksNFT is ERC721, Ownable {
         s_whitelistMintState = whitelistState;
     }
 
-    function publicMint() public payable {
-        if (msg.value < PUBLIC_MINT_PRICE) {
-            revert RoboPunksNFT__Not_Enough_Funds();
+    function publicMint(uint256 quantity) public payable {
+        if (!s_publicMintState) {
+            revert RoboPunksNFT__Public_Mint_Not_Enabled();
         }
 
-        uint256 tokenId = s_tokenIdCounter.current();
-        s_tokenIdCounter.increment();
-        _safeMint(msg.sender, tokenId);
+        if (msg.value < PUBLIC_MINT_PRICE * quantity) {
+            revert RoboPunksNFT__Wrong_Mint_Value();
+        }
+
+        if (s_totalSupply + quantity <= MAX_SUPPLY) {
+            revert RoboPunksNFT__We_Sold_Out();
+        }
+
+        if (s_walletMints[msg.sender] + quantity <= MAX_WALLET_LIMIT) {
+            revert RoboPunksNFT__Exceeded_Max_Wallet_Limit();
+        }
+
+        for (uint256 i = 0; i < quantity; i++) {
+            uint256 tokenId = s_tokenIdCounter.current() + 1;
+            s_tokenIdCounter.increment();
+            _safeMint(msg.sender, tokenId);
+        }
     }
 
     /**@dev setting whitelists addresses*/
     function setWhitelist(address[] calldata addresses) external onlyOwner {
-        for (uint i = 0; i < addresses.length; i++) {
+        for (uint256 i = 0; i < addresses.length; i++) {
             s_whitelists[addresses[i]] = true;
         }
     }
