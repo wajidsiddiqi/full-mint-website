@@ -19,7 +19,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
     bool private s_publicMintState = false;
     bool private s_whitelistMintState = false;
     string private s_baseTokenURI =
-        "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
+        "https://ipfs.io/ipfs/bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
     mapping(address => uint256) private s_walletMints;
 
     /**@dev Saving mapping of whitelists addresses*/
