@@ -37,7 +37,8 @@ contract RoboPunksNFT is ERC721, Ownable {
     function publicMint(uint256 quantity) public payable {
         require(s_publicMintState, "mint not enabled");
         require(msg.value == PUBLIC_MINT_PRICE * quantity, "wrong mint value");
-        require(s_totalSupply + quantity <= MAX_SUPPLY, "we sold out");
+        require(s_totalSupply == MAX_SUPPLY, "we sold out");
+        require(s_totalSupply + quantity <= MAX_SUPPLY, "exceeding max supply");
         require(
             s_walletMints[msg.sender] + quantity <= MAX_WALLET_LIMIT,
             "exceeded max wallet limit"
@@ -46,6 +47,7 @@ contract RoboPunksNFT is ERC721, Ownable {
         for (uint256 i = 0; i < quantity; i++) {
             uint256 tokenId = s_totalSupply + 1;
             s_totalSupply++;
+            s_walletMints[msg.sender]++;
             _safeMint(msg.sender, tokenId);
         }
     }
@@ -94,7 +96,7 @@ contract RoboPunksNFT is ERC721, Ownable {
         return s_whitelistMintState;
     }
 
-    function getWalletMintsLimit(
+    function getYourWalletMints(
         address walletAddress
     ) public view returns (uint256) {
         return s_walletMints[walletAddress];
