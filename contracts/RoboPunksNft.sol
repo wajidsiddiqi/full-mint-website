@@ -4,12 +4,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 error RoboPunksNFT__Withdraw_Failed();
 
-contract RoboPunksNFT is ERC721, Ownable {
+contract RoboPunksNFT is ERC721URIStorage, Ownable {
     //* State Variables
     uint256 private constant PUBLIC_MINT_PRICE = 0.08 ether;
     uint256 private constant WHITELIST_MINT_PRICE = 0.04 ether;
@@ -18,7 +18,8 @@ contract RoboPunksNFT is ERC721, Ownable {
     uint256 private constant MAX_WALLET_LIMIT = 2;
     bool private s_publicMintState = false;
     bool private s_whitelistMintState = false;
-    string[] private s_baseTokenURI;
+    string private s_baseTokenURI =
+        "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
     mapping(address => uint256) private s_walletMints;
 
     /**@dev Saving mapping of whitelists addresses*/
