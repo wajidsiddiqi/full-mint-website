@@ -73,12 +73,9 @@ contract RoboPunksNFT is ERC721, Ownable {
         }
     }
 
-    function withdraw() public onlyOwner {
+    function withdraw() external onlyOwner {
         uint256 ammount = address(this).balance;
-        (bool success, ) = payable(msg.sender).call{value: ammount}("");
-        if (!success) {
-            revert RoboPunksNFT__Withdraw_Failed();
-        }
+        payable(msg.sender).transfer(ammount);
     }
 
     //*Getter Functions
