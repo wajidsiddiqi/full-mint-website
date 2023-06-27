@@ -4,10 +4,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-error RoboPunksNFT__Withdraw_Failed();
 
 contract RoboPunksNFT is ERC721URIStorage, Ownable {
     //* State Variables
@@ -20,13 +19,17 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
     bool private s_whitelistMintState = false;
     string private s_baseTokenURI =
         "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
-    mapping(address => uint256) private s_walletMints;
 
+    //*Mappings
+    /**@dev Saving mapping of how much each wallet has minted*/
+    mapping(address => uint256) private s_walletMints;
     /**@dev Saving mapping of whitelists addresses*/
     mapping(address => bool) private s_whitelists;
 
+    //*Functions
     constructor() ERC721("RoboPunks", "RP") {}
 
+    /**@dev This function changes the state of nft*/
     function changeNftMintState(
         bool publicState,
         bool whitelistState
@@ -35,12 +38,14 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
         s_whitelistMintState = whitelistState;
     }
 
+    /**@dev This is a public mint function*/
     function publicMint(uint256 quantity) public payable {
         require(s_publicMintState, "mint not enabled");
         require(msg.value == PUBLIC_MINT_PRICE * quantity, "wrong mint value");
         internalMint(quantity);
     }
 
+    /**@dev This is a whitelist mint function*/
     function whitelistMint(uint256 quantity) public payable {
         require(s_whitelistMintState, "mint not enabled");
         require(s_whitelists[msg.sender], "not whitelisted");
@@ -51,6 +56,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
         internalMint(quantity);
     }
 
+    /**@dev This is a mint function and module that above functions uses*/
     function internalMint(uint256 quantity) internal {
         require(s_totalSupply <= MAX_SUPPLY, "we sold out");
         require(s_totalSupply + quantity <= MAX_SUPPLY, "exceeding max supply");
@@ -68,10 +74,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
         }
     }
 
-    function _baseURI() internal view virtual override returns (string memory) {
-        return s_baseTokenURI;
-    }
-
+    /**@dev This is a tokenURI generator function*/
     function tokenURI(
         uint256 tokenId
     ) internal view override returns (string memory) {
@@ -80,7 +83,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        string memory baseURI = _baseURI();
+        string memory baseURI = s_baseTokenURI;
         return
             bytes(baseURI).length > 0
                 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json"))
@@ -94,6 +97,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
         }
     }
 
+    /**@dev This is a withdraw function*/
     function withdraw() external onlyOwner {
         uint256 ammount = address(this).balance;
         payable(msg.sender).transfer(ammount);
@@ -134,7 +138,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
         return s_walletMints[walletAddress];
     }
 
-    function getWhitelists(
+    function checkWhitelist(
         address whitelistAddress
     ) public view returns (bool) {
         return s_whitelists[whitelistAddress];
