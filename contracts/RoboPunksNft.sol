@@ -7,8 +7,10 @@ pragma solidity 0.8.18;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol"; 
 
 contract RoboPunksNFT is ERC721URIStorage, Ownable {
+    using Strings for uint256;
     //* State Variables
     uint256 private constant PUBLIC_MINT_PRICE = 0.08 ether;
     uint256 private constant WHITELIST_MINT_PRICE = 0.04 ether;
@@ -77,7 +79,7 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
     /**@dev This is a tokenURI generator function*/
     function tokenURI(
         uint256 tokenId
-    ) internal view override returns (string memory) {
+    ) public view override returns (string memory) {
         require(
             _exists(tokenId),
             "ERC721Metadata: URI query for nonexistent token"
