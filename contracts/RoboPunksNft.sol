@@ -64,7 +64,27 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
             s_totalSupply++;
             s_walletMints[msg.sender]++;
             _safeMint(msg.sender, tokenId);
+            _setTokenURI(tokenId, tokenURI(tokenId));
         }
+    }
+
+    function _baseURI() internal view virtual override returns (string memory) {
+        return s_baseTokenURI;
+    }
+
+    function tokenURI(
+        uint256 tokenId
+    ) internal view override returns (string memory) {
+        require(
+            _exists(tokenId),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
+
+        string memory baseURI = _baseURI();
+        return
+            bytes(baseURI).length > 0
+                ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json"))
+                : "";
     }
 
     /**@dev setting whitelists addresses*/
