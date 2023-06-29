@@ -5,11 +5,10 @@
 pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol"; 
+import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract RoboPunksNFT is ERC721URIStorage, Ownable {
+contract RoboPunksNFT is ERC721, Ownable {
     using Strings for uint256;
     //* State Variables
     uint256 private constant PUBLIC_MINT_PRICE = 0.08 ether;
@@ -72,7 +71,6 @@ contract RoboPunksNFT is ERC721URIStorage, Ownable {
             s_totalSupply++;
             s_walletMints[msg.sender]++;
             _safeMint(msg.sender, tokenId);
-            _setTokenURI(tokenId, tokenURI(tokenId));
         }
     }
 
