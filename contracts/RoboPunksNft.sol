@@ -18,6 +18,7 @@ contract RoboPunksNFT is ERC721, Ownable {
     uint256 private constant MAX_WALLET_LIMIT = 2;
     bool private s_publicMintState = false;
     bool private s_whitelistMintState = false;
+    bool private s_reveal = false;
     string private s_baseTokenURI =
         "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
 
@@ -37,6 +38,11 @@ contract RoboPunksNFT is ERC721, Ownable {
     ) external onlyOwner {
         s_publicMintState = publicState;
         s_whitelistMintState = whitelistState;
+    }
+
+    /**@dev This function sets the reveal state of nft*/
+    function isRevealed(bool reveal) external onlyOwner {
+        s_reveal = reveal;
     }
 
     /**@dev This is a public mint function*/
@@ -83,11 +89,21 @@ contract RoboPunksNFT is ERC721, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        string memory baseURI = s_baseTokenURI;
-        return
-            bytes(baseURI).length > 0
-                ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json"))
-                : "";
+        if (!s_reveal) {
+            string memory baseURI = s_baseTokenURI;
+            return
+                bytes(baseURI).length > 0
+                    ? string(abi.encodePacked(baseURI))
+                    : "";
+        } else {
+            string memory baseURI = s_baseTokenURI;
+            return
+                bytes(baseURI).length > 0
+                    ? string(
+                        abi.encodePacked(baseURI, tokenId.toString(), ".json")
+                    )
+                    : "";
+        }
     }
 
     /**@dev setting whitelists addresses*/
