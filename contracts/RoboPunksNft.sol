@@ -1,8 +1,8 @@
-/**@dev This is a simple nft smart contract which uses erc-721 token and uses ipfs
- */
-
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
+
+/**@author Wajid*/
+/**@title Simple nft smart contract which uses erc-721 token and uses ipfs*/
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -45,14 +45,14 @@ contract RoboPunksNFT is ERC721, Ownable {
         s_reveal = reveal;
     }
 
-    /**@dev This is a public mint function*/
+    /**@dev This is a public mint function that checks public requirements*/
     function publicMint(uint256 quantity) public payable {
         require(s_publicMintState, "mint not enabled");
         require(msg.value == PUBLIC_MINT_PRICE * quantity, "wrong mint value");
         internalMint(quantity);
     }
 
-    /**@dev This is a whitelist mint function*/
+    /**@dev This is a whitelist mint function that checks WL requirements*/
     function whitelistMint(uint256 quantity) public payable {
         require(s_whitelistMintState, "mint not enabled");
         require(s_whitelists[msg.sender], "not whitelisted");
@@ -63,7 +63,7 @@ contract RoboPunksNFT is ERC721, Ownable {
         internalMint(quantity);
     }
 
-    /**@dev This is a mint function and module that above functions uses*/
+    /**@dev This is a mint function and module that mint functions uses*/
     function internalMint(uint256 quantity) internal {
         require(s_totalSupply <= MAX_SUPPLY, "we sold out");
         require(s_totalSupply + quantity <= MAX_SUPPLY, "exceeding max supply");
@@ -89,14 +89,15 @@ contract RoboPunksNFT is ERC721, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
+        string memory baseURI = s_baseTokenURI;
+
+        /**@dev This if checks whether reveal is on or off*/
         if (!s_reveal) {
-            string memory baseURI = s_baseTokenURI;
             return
                 bytes(baseURI).length > 0
                     ? string(abi.encodePacked(baseURI))
                     : "";
         } else {
-            string memory baseURI = s_baseTokenURI;
             return
                 bytes(baseURI).length > 0
                     ? string(
@@ -142,6 +143,10 @@ contract RoboPunksNFT is ERC721, Ownable {
 
     function getPublicNftState() public view returns (bool) {
         return s_publicMintState;
+    }
+
+    function getRevealState() public view returns (bool) {
+        return s_reveal;
     }
 
     function getWhitelistNftState() public view returns (bool) {
