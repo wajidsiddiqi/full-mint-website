@@ -91,6 +91,22 @@ const { assert, expect } = require("chai");
         });
       });
 
+      describe("WL Mint", () => {
+        let quantity, value;
+
+        beforeEach(async () => {
+          const price = await roboPunksNft.getWhitelistMintPrice();
+          quantity = 1;
+          value = price.mul(quantity);
+        });
+
+        it("reverts if WL is not open", async () => {
+          await expect(
+            roboPunksNft.whitelistMint(quantity, { value: value })
+          ).to.be.revertedWith("WL mint not enabled");
+        });
+      });
+
       /*describe("Mint NFT", () => {
         beforeEach(async () => {
           const txResponse = await basicNft.mintNft();
