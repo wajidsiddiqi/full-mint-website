@@ -47,14 +47,14 @@ contract RoboPunksNFT is ERC721, Ownable {
 
     /**@dev This is a public mint function that checks public requirements*/
     function publicMint(uint256 quantity) public payable {
-        require(s_publicMintState, "mint not enabled");
+        require(s_publicMintState, "public mint not enabled");
         require(msg.value == PUBLIC_MINT_PRICE * quantity, "wrong mint value");
         internalMint(quantity);
     }
 
     /**@dev This is a whitelist mint function that checks WL requirements*/
     function whitelistMint(uint256 quantity) public payable {
-        require(s_whitelistMintState, "mint not enabled");
+        require(s_whitelistMintState, "WL mint not enabled");
         require(s_whitelists[msg.sender], "not whitelisted");
         require(
             msg.value == WHITELIST_MINT_PRICE * quantity,
