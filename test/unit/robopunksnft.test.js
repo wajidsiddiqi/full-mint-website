@@ -25,82 +25,69 @@ const { assert, expect } = require("chai");
         it("Initializes the NFT Correctly.", async () => {
           const name = await roboPunksNft.name();
           const symbol = await roboPunksNft.symbol();
-          const nftState = await roboPunksNft.getNftState();
-          const mintFee = await roboPunksNft.getMintPrice();
+          const publicNftState = await roboPunksNft.getPublicNftState();
+          const wlNftState = await roboPunksNft.getWhitelistNftState();
+          const publicMintFee = await roboPunksNft.getPublicMintPrice();
+          const wlMintFee = await roboPunksNft.getWhitelistMintPrice();
           const totalSupply = await roboPunksNft.getTotalSupply();
           const maxSupply = await roboPunksNft.getMaxSupply();
           const walletLimit = await roboPunksNft.getWalletLimit();
+          const revealState = await roboPunksNft.getRevealState();
+          const baseTokenURI = await roboPunksNft.getBaseTokenURI();
 
           assert.equal(name, "RoboPunks");
           assert.equal(symbol, "RP");
-          assert.equal(nftState, false);
-          assert.equal(mintFee.toString(), ethers.utils.parseEther("0.4"));
+          assert.equal(publicNftState, false);
+          assert.equal(wlNftState, false);
+          assert.equal(revealState, false);
+          assert.equal(
+            publicMintFee.toString(),
+            ethers.utils.parseEther("0.08")
+          );
+          assert.equal(wlMintFee.toString(), ethers.utils.parseEther("0.04"));
           assert.equal(totalSupply, 0);
           assert.equal(maxSupply, 8);
           assert.equal(walletLimit, 2);
+          assert.equal(
+            baseTokenURI.toString(),
+            "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/"
+          );
         });
       });
 
-      describe("NFT state function only owner can change to true", () => {
-        it("changes nft state to true", async () => {
-          const [owner, nonOwner] = await ethers.getSigners();
-
-          //? Ensure initial state is false
-          let nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, false);
-
-          //? Attempt to change nft state by non-owner
-          await expect(
-            roboPunksNft.connect(nonOwner).changeNftMintState(true)
-          ).to.be.revertedWith("Ownable: caller is not the owner");
-
-          //? Confirm state remains false
-          nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, false);
-
-          //? Change nft state by owner
-          const txResponse = await roboPunksNft
-            .connect(owner)
-            .changeNftMintState(true);
+      describe("NFT State Changer", () => {
+        it("changes nft state", async () => {
+          const txResponse = await roboPunksNft.changeNftMintState(true, true);
           await txResponse.wait(1);
+          const publicNftState = await roboPunksNft.getPublicNftState();
+          const wlNftState = await roboPunksNft.getWhitelistNftState();
+          assert.equal(publicNftState, true);
+          assert.equal(wlNftState, true);
+        });
 
-          //? Confirm state is now true
-          nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, true);
+        it("reverts when non owner changes nft state", async () => {
+          const accounts = await ethers.getSigners();
+          const nonowner = accounts[1];
+          await expect(
+            roboPunksNft.connect(nonowner).changeNftMintState(true, true)
+          ).to.be.revertedWith("Ownable: caller is not the owner");
         });
       });
 
-      describe("NFT state function only owner can change to false", () => {
-        beforeEach(async () => {
-          const txResponse = await roboPunksNft.changeNftMintState(true);
+      describe("NFT Reveal", () => {
+        it("changes nft reveal", async () => {
+          const txResponse = await roboPunksNft.isRevealed(true);
           await txResponse.wait(1);
+          const revealState = await roboPunksNft.getRevealState();
+          assert.equal(revealState, true);
         });
 
-        it("changes nft state to false", async () => {
-          const [owner, nonOwner] = await ethers.getSigners();
-
-          //? Ensure initial state is true
-          let nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, true);
-
-          //? Attempt to change nft state by non-owner
+        it("reverts when non owner changes nft reveal", async () => {
+          const accounts = await ethers.getSigners();
+          const nonowner = accounts[1];
           await expect(
-            roboPunksNft.connect(nonOwner).changeNftMintState(false)
+            roboPunksNft.connect(nonowner).isRevealed(true)
           ).to.be.revertedWith("Ownable: caller is not the owner");
-
-          //? Confirm state remains true
-          nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, true);
-
-          //? Change nft state by owner
-          const txResponse = await roboPunksNft
-            .connect(owner)
-            .changeNftMintState(false);
-          await txResponse.wait(1);
-
-          //? Confirm state is now false
-          nftState = await roboPunksNft.getNftState();
-          assert.equal(nftState, false);
         });
       });
 
