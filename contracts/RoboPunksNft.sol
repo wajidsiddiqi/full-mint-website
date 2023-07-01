@@ -19,7 +19,7 @@ contract RoboPunksNFT is ERC721, Ownable {
     bool private s_publicMintState = false;
     bool private s_whitelistMintState = false;
     bool private s_reveal = false;
-    string private s_baseTokenURI =
+    string private constant BASE_TOKEN_URI =
         "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/";
 
     //*Mappings
@@ -89,7 +89,7 @@ contract RoboPunksNFT is ERC721, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        string memory baseURI = s_baseTokenURI;
+        string memory baseURI = BASE_TOKEN_URI;
 
         /**@dev This if checks whether reveal is on or off*/
         if (!s_reveal) {
@@ -123,6 +123,10 @@ contract RoboPunksNFT is ERC721, Ownable {
     //*Getter Functions
     function getPublicMintPrice() public pure returns (uint256) {
         return PUBLIC_MINT_PRICE;
+    }
+
+    function getBaseTokenURI() public pure returns (string memory) {
+        return BASE_TOKEN_URI;
     }
 
     function getWhitelistMintPrice() public pure returns (uint256) {
