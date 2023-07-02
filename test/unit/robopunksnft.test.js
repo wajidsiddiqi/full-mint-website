@@ -181,25 +181,46 @@ const { assert, expect } = require("chai");
         });
       });
 
-      /*describe("Mint NFT", () => {
+      describe("Public Mint", () => {
+        let quantity, value;
+
         beforeEach(async () => {
-          const txResponse = await basicNft.mintNft();
+          const price = await roboPunksNft.getPublicMintPrice();
+          quantity = 1;
+          value = price.mul(quantity);
+        });
+
+        it("reverts if public mint is not open", async () => {
+          await expect(
+            roboPunksNft.publicMint(quantity, { value: value })
+          ).to.be.revertedWith("public mint not enabled");
+        });
+
+        it("reverts if wrong mint value added", async () => {
+          const txResponse = await roboPunksNft.changeNftMintState(true, false);
           await txResponse.wait(1);
-        });
-        it("Allows users to mint an NFT, and updates appropriately", async function () {
-          const tokenURI = await basicNft.tokenURI(0);
-          const tokenCounter = await basicNft.getTokenCounter();
 
-          assert.equal(tokenCounter.toString(), "1");
-          assert.equal(tokenURI, await basicNft.TOKEN_URI());
+          await expect(
+            roboPunksNft.publicMint(2, { value: value })
+          ).to.be.revertedWith("wrong mint value");
         });
-        it("Show the correct balance and owner of an NFT", async function () {
-          const deployerAddress = deployer.address;
-          const deployerBalance = await basicNft.balanceOf(deployerAddress);
-          const owner = await basicNft.ownerOf("0");
 
-          assert.equal(deployerBalance.toString(), "1");
-          assert.equal(owner, deployerAddress);
+        it("allows public users to mint nft", async () => {
+          const txResponse1 = await roboPunksNft.changeNftMintState(
+            true,
+            false
+          );
+          await txResponse1.wait(1);
+          const txResponse2 = await roboPunksNft.publicMint(quantity, {
+            value: value,
+          });
+          await txResponse2.wait(1);
+          const userAddress = deployer.address;
+          const userBalance = await roboPunksNft.balanceOf(userAddress);
+          const owner = await roboPunksNft.ownerOf(1);
+
+          assert.equal(userBalance, 1);
+          assert.equal(owner, userAddress);
         });
-      });*/
+      });
     });
