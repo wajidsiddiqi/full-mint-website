@@ -91,6 +91,27 @@ const { assert, expect } = require("chai");
         });
       });
 
+      describe("Set WL", () => {
+        it("sets WL addresses", async () => {
+          const txResponse = await roboPunksNft.setWhitelist([
+            deployer.address,
+          ]);
+          await txResponse.wait(1);
+          const whiteListed = await roboPunksNft.checkWhitelist(
+            deployer.address
+          );
+          assert.equal(whiteListed, true);
+        });
+
+        it("reverts when non owner sets WL addresses", async () => {
+          const accounts = await ethers.getSigners();
+          const nonowner = accounts[1];
+          await expect(
+            roboPunksNft.connect(nonowner).setWhitelist([deployer.address])
+          ).to.be.revertedWith("Ownable: caller is not the owner");
+        });
+      });
+
       describe("WL Mint", () => {
         let quantity, value;
 
@@ -104,6 +125,14 @@ const { assert, expect } = require("chai");
           await expect(
             roboPunksNft.whitelistMint(quantity, { value: value })
           ).to.be.revertedWith("WL mint not enabled");
+        });
+
+        it("reverts if not whitelisted", async () => {
+          const txResponse = await roboPunksNft.changeNftMintState(false, true);
+          await txResponse.wait(1);
+          await expect(
+            roboPunksNft.whitelistMint(quantity, { value: value })
+          ).to.be.revertedWith("not whitelisted");
         });
       });
 
