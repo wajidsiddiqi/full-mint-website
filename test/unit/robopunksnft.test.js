@@ -61,6 +61,7 @@ const { assert, expect } = require("chai");
           await txResponse.wait(1);
           const publicNftState = await roboPunksNft.getPublicNftState();
           const wlNftState = await roboPunksNft.getWhitelistNftState();
+
           assert.equal(publicNftState, true);
           assert.equal(wlNftState, true);
         });
@@ -68,6 +69,7 @@ const { assert, expect } = require("chai");
         it("reverts when non owner changes nft state", async () => {
           const accounts = await ethers.getSigners();
           const nonowner = accounts[1];
+
           await expect(
             roboPunksNft.connect(nonowner).changeNftMintState(true, true)
           ).to.be.revertedWith("Ownable: caller is not the owner");
@@ -79,12 +81,14 @@ const { assert, expect } = require("chai");
           const txResponse = await roboPunksNft.isRevealed(true);
           await txResponse.wait(1);
           const revealState = await roboPunksNft.getRevealState();
+
           assert.equal(revealState, true);
         });
 
         it("reverts when non owner changes nft reveal", async () => {
           const accounts = await ethers.getSigners();
           const nonowner = accounts[1];
+
           await expect(
             roboPunksNft.connect(nonowner).isRevealed(true)
           ).to.be.revertedWith("Ownable: caller is not the owner");
@@ -100,12 +104,14 @@ const { assert, expect } = require("chai");
           const whiteListed = await roboPunksNft.checkWhitelist(
             deployer.address
           );
+
           assert.equal(whiteListed, true);
         });
 
         it("reverts when non owner sets WL addresses", async () => {
           const accounts = await ethers.getSigners();
           const nonowner = accounts[1];
+
           await expect(
             roboPunksNft.connect(nonowner).setWhitelist([deployer.address])
           ).to.be.revertedWith("Ownable: caller is not the owner");
@@ -130,9 +136,48 @@ const { assert, expect } = require("chai");
         it("reverts if not whitelisted", async () => {
           const txResponse = await roboPunksNft.changeNftMintState(false, true);
           await txResponse.wait(1);
+
           await expect(
             roboPunksNft.whitelistMint(quantity, { value: value })
           ).to.be.revertedWith("not whitelisted");
+        });
+
+        it("reverts if wrong mint value added", async () => {
+          const txResponse1 = await roboPunksNft.changeNftMintState(
+            false,
+            true
+          );
+          await txResponse1.wait(1);
+          const txResponse2 = await roboPunksNft.setWhitelist([
+            deployer.address,
+          ]);
+          await txResponse2.wait(1);
+
+          await expect(
+            roboPunksNft.whitelistMint(2, { value: value })
+          ).to.be.revertedWith("wrong mint value");
+        });
+
+        it("allows whitelist users to mint nft", async () => {
+          const txResponse1 = await roboPunksNft.changeNftMintState(
+            false,
+            true
+          );
+          await txResponse1.wait(1);
+          const txResponse2 = await roboPunksNft.setWhitelist([
+            deployer.address,
+          ]);
+          await txResponse2.wait(1);
+          const txResponse3 = await roboPunksNft.whitelistMint(quantity, {
+            value: value,
+          });
+          await txResponse3.wait(1);
+          const userAddress = deployer.address;
+          const userBalance = await roboPunksNft.balanceOf(userAddress);
+          const owner = await roboPunksNft.ownerOf(1);
+
+          assert.equal(userBalance, 1);
+          assert.equal(owner, userAddress);
         });
       });
 
