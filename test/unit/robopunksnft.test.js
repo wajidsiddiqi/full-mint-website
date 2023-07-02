@@ -223,4 +223,34 @@ const { assert, expect } = require("chai");
           assert.equal(owner, userAddress);
         });
       });
+
+      describe("Internal Mint", () => {
+        let quantity, value;
+
+        beforeEach(async () => {
+          const price = await roboPunksNft.getPublicMintPrice();
+          quantity = 1;
+          value = price.mul(quantity);
+          const txResponse = await roboPunksNft.changeNftMintState(true, false);
+          await txResponse.wait(1);
+        });
+
+        it("reverts if we sold out", async () => {
+          const accounts = await ethers.getSigners();
+          const maxSupply = await roboPunksNft.getMaxSupply();
+          for (let i = 0; i < maxSupply; i++) {
+            const mintAccount = accounts[i];
+            const txResponse = await roboPunksNft
+              .connect(mintAccount)
+              .publicMint(quantity, {
+                value: value,
+              });
+            await txResponse.wait(1);
+          }
+
+          await expect(
+            roboPunksNft.publicMint(quantity, { value: value })
+          ).to.be.revertedWith("we sold out");
+        });
+      });
     });
