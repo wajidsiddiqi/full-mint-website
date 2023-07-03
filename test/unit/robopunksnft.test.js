@@ -238,6 +238,7 @@ const { assert, expect } = require("chai");
         it("reverts if we sold out", async () => {
           const accounts = await ethers.getSigners();
           const maxSupply = await roboPunksNft.getMaxSupply();
+
           for (let i = 0; i < maxSupply; i++) {
             const mintAccount = accounts[i];
             const txResponse = await roboPunksNft
@@ -251,6 +252,38 @@ const { assert, expect } = require("chai");
           await expect(
             roboPunksNft.publicMint(quantity, { value: value })
           ).to.be.revertedWith("we sold out");
+        });
+
+        it("reverts if exceed's max wallet limit", async () => {
+          for (let i = 0; i < 2; i++) {
+            const txResponse = await roboPunksNft.publicMint(quantity, {
+              value: value,
+            });
+            await txResponse.wait(1);
+          }
+
+          await expect(
+            roboPunksNft.publicMint(quantity, { value: value })
+          ).to.be.revertedWith("exceeded max wallet limit");
+        });
+
+        it("mints nft and updates accordingly", async () => {
+          const txResponse = await roboPunksNft.publicMint(quantity, {
+            value: value,
+          });
+          await txResponse.wait(1);
+          const totalSupply = await roboPunksNft.getTotalSupply();
+          const walletMints = await roboPunksNft.getYourWalletMints(
+            deployer.address
+          );
+          const userAddress = deployer.address;
+          const userBalance = await roboPunksNft.balanceOf(userAddress);
+          const owner = await roboPunksNft.ownerOf(1);
+
+          assert.equal(totalSupply, 1);
+          assert.equal(walletMints, 1);
+          assert.equal(userBalance, 1);
+          assert.equal(owner, userAddress);
         });
       });
     });
