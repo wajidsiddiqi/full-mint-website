@@ -12,7 +12,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
   const roboPunksNft = await deploy("RoboPunksNFT", {
     from: deployer,
-    args: [],
     log: true,
     waitConfirmations: network.config.blockConfirmations || 1,
   });
@@ -22,7 +21,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     process.env.ETHERSCAN_API_KEY
   ) {
     log("Verifying.....");
-    await verify(roboPunksNft.address, args);
+    await verify(roboPunksNft.address);
   }
 
   log("---------------------------------------");
