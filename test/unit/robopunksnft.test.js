@@ -286,4 +286,43 @@ const { assert, expect } = require("chai");
           assert.equal(owner, userAddress);
         });
       });
+
+      describe("Token URI", () => {
+        let quantity, value;
+
+        beforeEach(async () => {
+          const price = await roboPunksNft.getPublicMintPrice();
+          quantity = 1;
+          value = price.mul(quantity);
+          const txResponse1 = await roboPunksNft.changeNftMintState(
+            true,
+            false
+          );
+          await txResponse1.wait(1);
+          const txResponse2 = await roboPunksNft.publicMint(quantity, {
+            value: value,
+          });
+          await txResponse2.wait(1);
+        });
+
+        it("returns base uri if reveal is off", async () => {
+          const baseURI = await roboPunksNft.tokenURI(1);
+
+          assert.equal(
+            baseURI.toString(),
+            "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/"
+          );
+        });
+
+        it("returns token uri", async () => {
+          const txResponse = await roboPunksNft.isRevealed(true);
+          await txResponse.wait(1);
+          const tokenURI = await roboPunksNft.tokenURI(1);
+
+          assert.equal(
+            tokenURI.toString(),
+            "ipfs://bafybeidlnjv7bbart3azzizjh76ywpvtns67nz3c2pdu5xvytdrtwbeopu/1.json"
+          );
+        });
+      });
     });
