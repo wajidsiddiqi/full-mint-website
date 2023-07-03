@@ -65,8 +65,7 @@ contract RoboPunksNFT is ERC721, Ownable {
 
     /**@dev This is a mint function and module that mint functions uses*/
     function internalMint(uint256 quantity) internal {
-        require(s_totalSupply <= MAX_SUPPLY, "we sold out");
-        require(s_totalSupply + quantity <= MAX_SUPPLY, "exceeding max supply");
+        require(s_totalSupply + quantity <= MAX_SUPPLY, "we sold out");
         require(
             s_walletMints[msg.sender] + quantity <= MAX_WALLET_LIMIT,
             "exceeded max wallet limit"
