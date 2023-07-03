@@ -325,4 +325,59 @@ const { assert, expect } = require("chai");
           );
         });
       });
+
+      describe("Withdraw", () => {
+        let quantity, value;
+
+        beforeEach(async () => {
+          const price = await roboPunksNft.getPublicMintPrice();
+          quantity = 1;
+          value = price.mul(quantity);
+          const txResponse1 = await roboPunksNft.changeNftMintState(
+            true,
+            false
+          );
+          await txResponse1.wait(1);
+          const accounts = await ethers.getSigners();
+          const txResponse2 = await roboPunksNft
+            .connect(accounts[1])
+            .publicMint(quantity, {
+              value: value,
+            });
+          await txResponse2.wait(1);
+        });
+
+        it("fails if non owner withdraws", async () => {
+          const accounts = await ethers.getSigners();
+          const nonowner = accounts[2];
+
+          await expect(
+            roboPunksNft.connect(nonowner).withdraw()
+          ).to.be.revertedWith("Ownable: caller is not the owner");
+        });
+
+        it("successfully withdraws", async () => {
+          const initialBalance = await ethers.provider.getBalance(
+            roboPunksNft.address
+          );
+          const initialOwnerBalance = await ethers.provider.getBalance(
+            deployer.address
+          );
+          const tx = await roboPunksNft.withdraw();
+          const receipt = await tx.wait();
+          const gasCost = receipt.gasUsed.mul(tx.gasPrice);
+          const finalBalance = await ethers.provider.getBalance(
+            roboPunksNft.address
+          );
+          const finalOwnerBalance = await ethers.provider.getBalance(
+            deployer.address
+          );
+
+          assert.equal(finalBalance.toString(), "0");
+          assert.equal(
+            finalOwnerBalance.toString(),
+            initialOwnerBalance.sub(gasCost).add(initialBalance).toString()
+          );
+        });
+      });
     });
