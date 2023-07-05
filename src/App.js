@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import PublicMint from "./PublicMint";
+import WLMint from "./WLMint";
 import NavBar from "./NavBar";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <div className="App">
       <NavBar accounts={accounts} setAccounts={setAccounts} />
       <PublicMint accounts={accounts} setAccounts={setAccounts} />
+      <WLMint accounts={accounts} setAccounts={setAccounts} />
     </div>
   );
 }
