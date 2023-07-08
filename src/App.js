@@ -1,8 +1,8 @@
 import "./App.css";
-// import PublicMint from "./PublicMint";
+import PublicMint from "./PublicMint";
 // import WLMint from "./WLMint";
 import NavBar from "./NavBar";
-import { WagmiConfig, createConfig, chain } from "wagmi";
+import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
 
@@ -24,6 +24,7 @@ const App = () => {
     <WagmiConfig config={config}>
       <ConnectKitProvider theme="midnight">
         <NavBar />
+        <PublicMint />
       </ConnectKitProvider>
     </WagmiConfig>
   );
