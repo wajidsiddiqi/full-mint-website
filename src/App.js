@@ -1,34 +1,32 @@
-// import { useState } from "react";
 import "./App.css";
 // import PublicMint from "./PublicMint";
 // import WLMint from "./WLMint";
 import NavBar from "./NavBar";
-import { WagmiConfig, createConfig, mainnet } from "wagmi";
-import { createPublicClient, http } from "viem";
+import { WagmiConfig, createConfig, chain } from "wagmi";
+import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { sepolia } from "wagmi/chains";
 
-const config = createConfig({
-  autoConnect: true,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
-});
+const alchemyId = process.env.SEPOLIA_PRIVATE_KEY;
+const walletConnectProjectId = process.env.WALLETCONNECT_PROJECT_ID;
+const chains = [sepolia];
 
-function App() {
-  /*const [accounts, setAccounts] = useState([]);
+const config = createConfig(
+  getDefaultConfig({
+    appName: "RoboPunksNFT",
+    alchemyId,
+    walletConnectProjectId,
+    chains,
+  })
+);
 
-  return (
-    <div className="App">
-      <NavBar accounts={accounts} setAccounts={setAccounts} />
-      <PublicMint accounts={accounts} setAccounts={setAccounts} />
-      <WLMint accounts={accounts} setAccounts={setAccounts} />
-    </div>
-  );*/
+const App = () => {
   return (
     <WagmiConfig config={config}>
-      <NavBar />
+      <ConnectKitProvider theme="midnight">
+        <NavBar />
+      </ConnectKitProvider>
     </WagmiConfig>
   );
-}
+};
 
 export default App;

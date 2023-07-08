@@ -1,24 +1,30 @@
-import React from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-
-// const NavBar = () => {};
+import { useAccount, useDisconnect } from "wagmi";
+import { ConnectKitButton } from "connectkit";
 
 function NavBar() {
-  const { address, isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
 
-  if (isConnected)
-    return (
-      <div>
-        Connected to {address}
+  return (
+    <div>
+      {/*Left side - Social media icons */}
+      <div>Discord</div>
+      <div>Twitter</div>
+      <div>OpenSea</div>
+
+      {/*Right side - sections and connect button */}
+      <div>Mint</div>
+      <div>About</div>
+      <div>Team</div>
+
+      {/*Connect*/}
+      {isConnected ? (
         <button onClick={() => disconnect()}>Disconnect</button>
-      </div>
-    );
-  return <button onClick={() => connect()}>Connect Wallet</button>;
+      ) : (
+        <ConnectKitButton />
+      )}
+    </div>
+  );
 }
 
 export default NavBar;
