@@ -8,12 +8,11 @@ import {
 } from "wagmi";
 import RoboPunksNFT from "./RoboPunksNFT.json";
 
-const { isConnected } = useAccount();
-
 const contractAddress = "0xafba542846406CE66D3d1b2773d0237fb993af43";
 const mintPrice = "0.08";
 
 const PublicMint = () => {
+  const { isConnected } = useAccount();
   const [mintQuantity, setMintQuantity] = useState(1);
 
   const {
@@ -24,10 +23,8 @@ const PublicMint = () => {
     address: contractAddress,
     abi: RoboPunksNFT.abi,
     functionName: "publicMint",
-    args: [
-      mintQuantity,
-      { value: ethers.utils.parseEther(mintPrice).mul(mintQuantity) },
-    ],
+    args: [mintQuantity],
+    value: ethers.utils.parseEther(mintPrice).mul(mintQuantity).toString(),
   });
 
   const { data, error, isError, write } = useContractWrite(config);
@@ -41,7 +38,7 @@ const PublicMint = () => {
   };
 
   const handleIncrement = () => {
-    if (mintQuantity >= 3) return;
+    if (mintQuantity >= 2) return;
     setMintQuantity(mintQuantity + 1);
   };
 
@@ -60,14 +57,16 @@ const PublicMint = () => {
             <input type="number" value={mintQuantity}></input>
             <button onClick={handleIncrement}>+</button>
           </div>
-          <button disabled={!write || isLoading}>
+          <button disabled={!write || isLoading} onClick={write}>
             {isLoading ? "Minting..." : "Mint Now!"}
           </button>
           {isSuccess && (
             <div>
               Successfully minted your NFT!
               <div>
-                <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+                <a href={`https://sepolia.etherscan.io/tx/${data?.hash}`}>
+                  Etherscan
+                </a>
               </div>
             </div>
           )}
