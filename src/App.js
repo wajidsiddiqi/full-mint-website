@@ -21,12 +21,15 @@ const config = createConfig(
 
 const App = () => {
   return (
-    <WagmiConfig config={config}>
-      <ConnectKitProvider theme="midnight">
-        <NavBar />
-        <PublicMint />
-      </ConnectKitProvider>
-    </WagmiConfig>
+    <div className="App">
+      <WagmiConfig config={config}>
+        <ConnectKitProvider theme="midnight">
+          <NavBar />
+          <PublicMint />
+        </ConnectKitProvider>
+      </WagmiConfig>
+      <div className="moving-bg"></div>
+    </div>
   );
 };
 
