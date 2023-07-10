@@ -13,6 +13,8 @@
 
 body {
   overflow: hidden;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .moving-bg {
