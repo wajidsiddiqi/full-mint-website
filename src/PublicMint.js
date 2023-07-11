@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { Box, Flex, Input, Button, Text } from "@chakra-ui/react";
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -26,12 +27,13 @@ const PublicMint = () => {
     args: [mintQuantity],
     value: ethers.utils.parseEther(mintPrice).mul(mintQuantity).toString(),
   });
-
+  const prepareErrorMessage = prepareError?.message || "";
+  console.log("prepareError:", prepareError);
   const { data, error, isError, write } = useContractWrite(config);
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
-
+  console.log("error:", error);
   const handleDecrement = () => {
     if (mintQuantity <= 1) return;
     setMintQuantity(mintQuantity - 1);
@@ -43,41 +45,133 @@ const PublicMint = () => {
   };
 
   return (
-    <div>
-      <h1>RoboPunks</h1>
-      <p>
-        This is my full-stack NFT portfolio development project, created using
-        Solidity, Hardhat, React, WAGMI, and various other technologies. The
-        project implements the ERC-721 token standard.
-      </p>
-      {isConnected ? (
+    <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
+      <Box width="520px">
         <div>
-          <div>
-            <button onClick={handleDecrement}>-</button>
-            <input type="number" value={mintQuantity}></input>
-            <button onClick={handleIncrement}>+</button>
-          </div>
-          <button disabled={!write || isLoading} onClick={write}>
-            {isLoading ? "Minting..." : "Mint Now!"}
-          </button>
-          {isSuccess && (
-            <div>
-              Successfully minted your NFT!
-              <div>
-                <a href={`https://sepolia.etherscan.io/tx/${data?.hash}`}>
-                  Etherscan
-                </a>
-              </div>
-            </div>
-          )}
-          {(isPrepareError || isError) && (
-            <div>Error: {(prepareError || error)?.message}</div>
-          )}
+          <Text fontSize="40px" textShadow="0 5px #000000">
+            RoboPunks
+          </Text>
+          <Text
+            fontSize="30px"
+            letterSpacing="-5.5%"
+            fontFamily="VT323"
+            textShadow="0 2px 2px #000000"
+          >
+            This is my full-stack NFT portfolio development project, created
+            using Solidity, Hardhat, React, WAGMI, and various other
+            technologies. The project implements the ERC-721 token standard.
+          </Text>
         </div>
-      ) : (
-        <p>You must be connected to Mint!</p>
-      )}
-    </div>
+
+        {isConnected ? (
+          <div>
+            <Flex align="center" justify="center">
+              <Button
+                backgroundColor="#D6517D"
+                borderRadius="5px"
+                boxShadow="0px 2px 2px 1px #0F0F0F"
+                color="white"
+                cursor="pointer"
+                fontFamily="inherit"
+                padding="15px"
+                marginTop="10px"
+                onClick={handleDecrement}
+              >
+                -
+              </Button>
+              <Input
+                type="number"
+                readOnly
+                fontFamily="inherit"
+                width="100px"
+                height="40px"
+                textAlign="center"
+                paddingLeft="19px"
+                marginTop="10px"
+                value={mintQuantity}
+              ></Input>
+              <Button
+                backgroundColor="#D6517D"
+                borderRadius="5px"
+                boxShadow="0px 2px 2px 1px #0F0F0F"
+                color="white"
+                cursor="pointer"
+                fontFamily="inherit"
+                padding="15px"
+                marginTop="10px"
+                onClick={handleIncrement}
+              >
+                +
+              </Button>
+            </Flex>
+            <Button
+              backgroundColor="#D6517D"
+              borderRadius="5px"
+              boxShadow="0px 2px 2px 1px #0F0F0F"
+              color="white"
+              cursor="pointer"
+              fontFamily="inherit"
+              padding="15px"
+              marginTop="10px"
+              disabled={!write || isLoading}
+              onClick={write}
+            >
+              {isLoading ? "MINTING..." : "MINT NOW!"}
+            </Button>
+            {isSuccess && (
+              <Flex align="center" justify="center">
+                <Text
+                  fontSize="30px"
+                  letterSpacing="-5.5%"
+                  fontFamily="VT323"
+                  textShadow="0 3px #000000"
+                  marginTop="70px"
+                  color="#D6517D"
+                >
+                  Successfully minted your NFT!
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
+                    style={{
+                      color: "#D6517D",
+                      textDecoration: "none",
+                      fontWeight: "bold",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Etherscan
+                  </a>
+                </Text>
+              </Flex>
+            )}
+            {(isPrepareError || isError) && (
+              <Flex align="center" justify="center">
+                <Text
+                  fontSize="30px"
+                  letterSpacing="-5.5%"
+                  fontFamily="VT323"
+                  textShadow="0 3px #000000"
+                  marginTop="70px"
+                  color="red"
+                >
+                  Error: {prepareErrorMessage || error?.message}
+                </Text>
+              </Flex>
+            )}
+          </div>
+        ) : (
+          <Text
+            fontSize="30px"
+            letterSpacing="-5.5%"
+            fontFamily="VT323"
+            textShadow="0 3px #000000"
+            marginTop="70px"
+            color="#D6517D"
+          >
+            You must be connected to Mint!
+          </Text>
+        )}
+      </Box>
+    </Flex>
   );
 };
 
