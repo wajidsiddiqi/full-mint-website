@@ -1,9 +1,22 @@
 import { useAccount, useDisconnect } from "wagmi";
 import { ConnectKitButton } from "connectkit";
-import { Box, Button, Flex, Image, Link, Spacer } from "@chakra-ui/react";
+import { Box, Flex, Image, Button, Link, Spacer } from "@chakra-ui/react";
 import Twitter from "./assets/social-media-icons/twitter.png";
 import Discord from "./assets/social-media-icons/discord.png";
 import Opensea from "./assets/social-media-icons/opensea.png";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  cursor: pointer;
+  padding: 15px;
+  color: white;
+  background-color: #d6517d;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px 1px #0f0f0f;
+  border-radius: 5px;
+  font-family: inherit;
+  margin: 0 15px;
+`;
 
 function NavBar() {
   const { isConnected } = useAccount();
@@ -26,18 +39,39 @@ function NavBar() {
 
       {/*Right side - sections and connect button */}
       <Flex justify="space-around" align="center" padding="0 130px" width="50%">
-        <Box margin="0 15px">Mint</Box>
+        <Box margin="0 15px" cursor="pointer">
+          Mint
+        </Box>
         <Spacer />
-        <Box margin="0 15px">Team</Box>
+        <Box margin="0 15px" cursor="pointer">
+          Team
+        </Box>
         <Spacer />
-        <Box margin="0 15px">About</Box>
+        <Box margin="0 15px" cursor="pointer">
+          About
+        </Box>
         <Spacer />
 
         {/*Connect*/}
         {isConnected ? (
-          <button onClick={() => disconnect()}>Disconnect</button>
+          <Button
+            margin="0 15px"
+            color="white"
+            cursor="pointer"
+            fontFamily="inherit"
+            background="none"
+            border="none"
+            font-size="16px"
+            onClick={() => disconnect()}
+          >
+            Disconnect
+          </Button>
         ) : (
-          <ConnectKitButton />
+          <ConnectKitButton.Custom>
+            {({ show }) => {
+              return <StyledButton onClick={show}>Connect</StyledButton>;
+            }}
+          </ConnectKitButton.Custom>
         )}
       </Flex>
     </Flex>
