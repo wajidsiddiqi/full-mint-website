@@ -23,7 +23,7 @@ const App = () => {
   return (
     <div className="App">
       <WagmiConfig config={config}>
-        <ConnectKitProvider theme="midnight">
+        <ConnectKitProvider theme="rounded">
           <NavBar />
           <PublicMint />
         </ConnectKitProvider>
