@@ -27,13 +27,16 @@ const PublicMint = () => {
     args: [mintQuantity],
     value: ethers.utils.parseEther(mintPrice).mul(mintQuantity).toString(),
   });
-  const prepareErrorMessage = prepareError?.message || "";
-  console.log("prepareError:", prepareError);
-  const { data, error, isError, write } = useContractWrite(config);
+
+  const { data, error, isError, write } = useContractWrite(config, {
+    shouldReturnTransactionError: false,
+  });
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
-  console.log("error:", error);
+
+  const parsedErrorMessage = prepareError.replace(/Docs:.*\nVersion:.*$/gm, "");
+
   const handleDecrement = () => {
     if (mintQuantity <= 1) return;
     setMintQuantity(mintQuantity - 1);
@@ -126,7 +129,7 @@ const PublicMint = () => {
                   fontFamily="VT323"
                   textShadow="0 3px #000000"
                   marginTop="70px"
-                  color="#D6517D"
+                  color="green"
                 >
                   Successfully minted your NFT!
                   <a
@@ -153,7 +156,7 @@ const PublicMint = () => {
                   marginTop="70px"
                   color="red"
                 >
-                  Error: {prepareErrorMessage || error?.message}
+                  Error: {(parsedErrorMessage || error)?.message}
                 </Text>
               </Flex>
             )}
