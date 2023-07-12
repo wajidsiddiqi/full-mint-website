@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { Box, Flex, Input, Button, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Button, Text, Spacer } from "@chakra-ui/react";
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -131,20 +131,17 @@ const PublicMint = () => {
               <Flex align="center" justify="center">
                 <Text
                   fontSize="30px"
-                  letterSpacing="-5.5%"
                   fontFamily="VT323"
                   textShadow="0 3px #000000"
-                  marginTop="70px"
-                  color="green"
+                  color="#2bd42b"
                 >
                   Successfully minted your NFT!
+                  <Spacer />
                   <a
                     href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
                     style={{
                       color: "#D6517D",
                       textDecoration: "none",
-                      fontWeight: "bold",
-                      marginLeft: "10px",
                     }}
                   >
                     Etherscan
