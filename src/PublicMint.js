@@ -28,14 +28,20 @@ const PublicMint = () => {
     value: ethers.utils.parseEther(mintPrice).mul(mintQuantity).toString(),
   });
 
-  const { data, error, isError, write } = useContractWrite(config, {
-    shouldReturnTransactionError: false,
-  });
+  const { data, error, isError, write } = useContractWrite(config);
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
 
-  const parsedErrorMessage = prepareError.replace(/Docs:.*\nVersion:.*$/gm, "");
+  //*Extracting relevent error to show on UI
+  const extractErrorReason = (message) => {
+    const start = message.indexOf(":");
+    const end = message.indexOf("Contract Call:");
+    if (start !== -1 && end !== -1) {
+      return message.substring(start + 1, end).trim();
+    }
+    return message.toString();
+  };
 
   const handleDecrement = () => {
     if (mintQuantity <= 1) return;
@@ -61,7 +67,7 @@ const PublicMint = () => {
             textShadow="0 2px 2px #000000"
           >
             This is my full-stack NFT portfolio development project, created
-            using Solidity, Hardhat, React, WAGMI, and various other
+            using Solidity, Hardhat, React, WAGMI, Chakra, and various other
             technologies. The project implements the ERC-721 token standard.
           </Text>
         </div>
@@ -149,14 +155,14 @@ const PublicMint = () => {
             {(isPrepareError || isError) && (
               <Flex align="center" justify="center">
                 <Text
-                  fontSize="30px"
-                  letterSpacing="-5.5%"
+                  fontSize="25px"
                   fontFamily="VT323"
                   textShadow="0 3px #000000"
-                  marginTop="70px"
+                  marginTop="35px"
                   color="red"
                 >
-                  Error: {(parsedErrorMessage || error)?.message}
+                  Error:{" "}
+                  {extractErrorReason(prepareError?.message) || error?.message}
                 </Text>
               </Flex>
             )}
