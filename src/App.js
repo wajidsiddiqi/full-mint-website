@@ -1,6 +1,5 @@
 import "./App.css";
 import PublicMint from "./PublicMint";
-// import WLMint from "./WLMint";
 import NavBar from "./NavBar";
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
@@ -24,11 +23,14 @@ const App = () => {
     <div className="App">
       <WagmiConfig config={config}>
         <ConnectKitProvider theme="rounded">
-          <NavBar />
-          <PublicMint />
+          <div className="bg-image img1">
+            <NavBar />
+            <PublicMint />
+          </div>
+          <div className="bg-image img2"></div>
+          <div className="bg-image img3"></div>
         </ConnectKitProvider>
       </WagmiConfig>
-      <div className="moving-bg"></div>
     </div>
   );
 };
