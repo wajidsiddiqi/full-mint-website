@@ -23,7 +23,13 @@ function NavBar() {
   const { disconnect } = useDisconnect();
 
   return (
-    <Flex justify="space-between" padding="30px" align="center">
+    <Flex
+      justify="space-between"
+      padding="30px"
+      align="center"
+      maxWidth="1600px"
+      margin="auto"
+    >
       {/*Left side - Social media icons */}
       <Flex justify="space-around" padding="0 75px" width="40%">
         <Link href="https://www.discord.com">
