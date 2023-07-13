@@ -54,7 +54,14 @@ const PublicMint = () => {
   };
 
   return (
-    <Flex justify="center" align="center" height="100vh" paddingBottom="150px">
+    <Flex
+      justify="center"
+      align="center"
+      height="100vh"
+      paddingBottom="150px"
+      maxWidth="1600px"
+      margin="auto"
+    >
       <Box width="520px">
         <div>
           <Text fontSize="40px" textShadow="0 5px #000000">
