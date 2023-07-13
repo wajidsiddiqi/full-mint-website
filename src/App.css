@@ -12,22 +12,21 @@
 }
 
 body {
-  overflow: hidden;
-  max-width: 1600px;
   margin: auto;
 }
 
-.moving-bg {
-  opacity: 0.94;
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("./assets/background/parallax-bg.gif");
-  background-size: cover;
-  background-attachment: fixed;
+.bg-image {
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: 40% 40%;
+  background-size: cover;
+}
+
+.img1 {
+  background-image: url("./assets/background/bg1.gif");
+}
+.img2 {
+  background-image: url("./assets/background/bg2.gif");
+}
+.img3 {
+  background-image: url("./assets/background/bg3.gif");
 }
