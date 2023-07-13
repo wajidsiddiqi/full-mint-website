@@ -1,6 +1,7 @@
 import "./App.css";
 import PublicMint from "./PublicMint";
 import NavBar from "./NavBar";
+import Team from "./Team";
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
@@ -27,7 +28,9 @@ const App = () => {
             <NavBar />
             <PublicMint />
           </div>
-          <div className="bg-image img2"></div>
+          <div className="bg-image img2">
+            <Team />
+          </div>
           <div className="bg-image img3"></div>
         </ConnectKitProvider>
       </WagmiConfig>
