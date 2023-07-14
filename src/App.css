@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .App {
   text-align: center;
   font-family: "Press Start 2P", "VT323";
@@ -25,4 +29,21 @@
 }
 .img3 {
   background-image: url("./assets/background/bg3.gif");
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #272525;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #812c49;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #d6517d;
 }
