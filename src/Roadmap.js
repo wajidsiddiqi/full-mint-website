@@ -13,7 +13,7 @@ const Roadmap = () => {
         justify="center"
         align="center"
         flexGrow="1"
-        padding="90px 2px 30px 2px"
+        padding="90px 2% 30px 2%"
       >
         <Box width="520px">
           <div>
@@ -58,7 +58,7 @@ const Roadmap = () => {
               width="25px"
               height="auto"
               cursor="pointer"
-              margin-left="10px"
+              style={{ marginLeft: "10px" }}
             />
           </a>
         </Flex>
