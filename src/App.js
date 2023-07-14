@@ -2,6 +2,7 @@ import "./App.css";
 import PublicMint from "./PublicMint";
 import NavBar from "./NavBar";
 import Team from "./Team";
+import Roadmap from "./Roadmap";
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
@@ -31,7 +32,9 @@ const App = () => {
           <div className="bg-image img2">
             <Team />
           </div>
-          <div className="bg-image img3"></div>
+          <div className="bg-image img3">
+            <Roadmap />
+          </div>
         </ConnectKitProvider>
       </WagmiConfig>
     </div>
