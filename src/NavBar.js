@@ -54,7 +54,7 @@ function NavBar() {
         </Box>
         <Spacer />
         <Box margin="0 15px" cursor="pointer">
-          About
+          Roadmap
         </Box>
         <Spacer />
 
