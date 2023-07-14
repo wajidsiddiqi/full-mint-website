@@ -67,7 +67,7 @@ function NavBar() {
             fontFamily="inherit"
             background="none"
             border="none"
-            font-size="16px"
+            fontSize="16px"
             onClick={() => disconnect()}
           >
             Disconnect
