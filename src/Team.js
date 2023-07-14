@@ -14,7 +14,7 @@ const Team = () => {
       <div className="team-content">
         <div className="box">
           <img src={img1} alt="Team Member" className="pf" />
-          <h3>Steph Jobs</h3>
+          <h3>Peter Joe</h3>
           <h5>Founder</h5>
           <div className="icons">
             <a href="#">
