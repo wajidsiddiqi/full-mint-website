@@ -2,6 +2,7 @@ import "./Team.css";
 import img1 from "./assets/images/1.jpg";
 import img2 from "./assets/images/2.jpg";
 import img3 from "./assets/images/3.jpg";
+import Twitter from "./assets/social-media-icons/twitter.png";
 
 const Team = () => {
   return (
@@ -12,52 +13,40 @@ const Team = () => {
 
       <div className="team-content">
         <div className="box">
-          <img src={img1} alt="Team Member" />
+          <img src={img1} alt="Team Member" className="pf" />
           <h3>Steph Jobs</h3>
           <h5>Founder</h5>
           <div className="icons">
             <a href="#">
-              <i className="ri-twitter-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-facebook-box-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-instagram-fill"></i>
+              <i>
+                <img src={Twitter} alt="Twitter" />
+              </i>
             </a>
           </div>
         </div>
 
         <div className="box">
-          <img src={img2} alt="Team Member" />
+          <img src={img2} alt="Team Member" className="pf" />
           <h3>Wajid</h3>
           <h5>Developer</h5>
           <div className="icons">
             <a href="#">
-              <i className="ri-twitter-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-facebook-box-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-instagram-fill"></i>
+              <i>
+                <img src={Twitter} alt="Twitter" />
+              </i>
             </a>
           </div>
         </div>
 
         <div className="box">
-          <img src={img3} alt="Team Member" />
+          <img src={img3} alt="Team Member" className="pf" />
           <h3>Tom Luka</h3>
           <h5>Artist</h5>
           <div className="icons">
             <a href="#">
-              <i className="ri-twitter-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-facebook-box-fill"></i>
-            </a>
-            <a href="#">
-              <i className="ri-instagram-fill"></i>
+              <i>
+                <img src={Twitter} alt="Twitter" />
+              </i>
             </a>
           </div>
         </div>
