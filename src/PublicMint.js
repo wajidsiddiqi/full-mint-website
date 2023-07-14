@@ -58,7 +58,7 @@ const PublicMint = () => {
       justify="center"
       align="center"
       height="100vh"
-      paddingBottom="150px"
+      paddingBottom="120px"
       maxWidth="1600px"
       margin="auto"
     >
