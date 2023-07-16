@@ -27,15 +27,13 @@ function NavBar() {
       justify="space-between"
       align="center"
       wrap="wrap"
-      position="fixed"
+      position="absolute"
       top="0"
       left="0"
       right="0"
-      zIndex="999"
-      backgroundColor="#ffffff"
-      boxShadow="0px 2px 4px rgba(0, 0, 0, 0.1)"
-      padding="10px"
-      margin="20px"
+      maxWidth="1600px"
+      padding="10px 100px"
+      margin="20px auto"
     >
       {/* Left side - Social media icons */}
       <Flex
@@ -45,13 +43,13 @@ function NavBar() {
         marginBottom={{ base: "10px", md: "0" }}
       >
         <Link href="https://www.discord.com">
-          <Image src={Discord} boxSize="40px" margin="0 15px"></Image>
+          <Image src={Discord} boxSize="32px" margin="0 15px"></Image>
         </Link>
         <Link href="https://www.twitter.com">
-          <Image src={Twitter} boxSize="40px" margin="0 15px"></Image>
+          <Image src={Twitter} boxSize="32px" margin="0 15px"></Image>
         </Link>
         <Link href="https://testnets.opensea.io/collection/robopunks-40">
-          <Image src={Opensea} boxSize="40px" margin="0 15px"></Image>
+          <Image src={Opensea} boxSize="32px" margin="0 15px"></Image>
         </Link>
       </Flex>
 
