@@ -8,14 +8,14 @@ import styled from "styled-components";
 
 const StyledButton = styled.button`
   cursor: pointer;
-  padding: 15px;
+  padding: 1rem;
   color: white;
   background-color: #d6517d;
   border-radius: 5px;
   box-shadow: 0px 2px 2px 1px #0f0f0f;
   border-radius: 5px;
   font-family: inherit;
-  margin: 0 15px;
+  margin: 0 1rem;
 `;
 
 function NavBar() {
@@ -25,13 +25,25 @@ function NavBar() {
   return (
     <Flex
       justify="space-between"
-      padding="30px"
       align="center"
-      maxWidth="1600px"
-      margin="auto"
+      wrap="wrap"
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex="999"
+      backgroundColor="#ffffff"
+      boxShadow="0px 2px 4px rgba(0, 0, 0, 0.1)"
+      padding="10px"
+      margin="20px"
     >
-      {/*Left side - Social media icons */}
-      <Flex justify="space-around" padding="0 75px" width="40%">
+      {/* Left side - Social media icons */}
+      <Flex
+        justify="space-around"
+        padding="0 10px"
+        width={{ base: "100%", md: "40%" }}
+        marginBottom={{ base: "10px", md: "0" }}
+      >
         <Link href="https://www.discord.com">
           <Image src={Discord} boxSize="40px" margin="0 15px"></Image>
         </Link>
@@ -43,22 +55,28 @@ function NavBar() {
         </Link>
       </Flex>
 
-      {/*Right side - sections and connect button */}
-      <Flex justify="space-around" align="center" padding="0 130px" width="50%">
-        <Box margin="0 15px" cursor="pointer">
-          Mint
-        </Box>
-        <Spacer />
-        <Box margin="0 15px" cursor="pointer">
-          Team
-        </Box>
-        <Spacer />
-        <Box margin="0 15px" cursor="pointer">
-          Roadmap
-        </Box>
+      {/* Right side - sections and connect button */}
+      <Flex
+        justify="space-between"
+        align="center"
+        padding="0 10px"
+        width={{ base: "100%", md: "60%" }}
+      >
+        <Flex justify="space-between" width={{ base: "60%", md: "auto" }}>
+          <Box margin="0 15px" cursor="pointer">
+            Mint
+          </Box>
+          <Box margin="0 15px" cursor="pointer">
+            Team
+          </Box>
+          <Box margin="0 15px" cursor="pointer">
+            Roadmap
+          </Box>
+        </Flex>
+
         <Spacer />
 
-        {/*Connect*/}
+        {/* Connect */}
         {isConnected ? (
           <Button
             margin="0 15px"
