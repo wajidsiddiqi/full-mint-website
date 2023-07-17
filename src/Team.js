@@ -30,7 +30,7 @@ const Team = () => {
           <h3>Wajid</h3>
           <h5>Developer</h5>
           <div className="icons">
-            <a href="#">
+            <a href="https://twitter.com/abdulwajidsid" target="_blank">
               <i>
                 <img src={Twitter} alt="Twitter" />
               </i>
