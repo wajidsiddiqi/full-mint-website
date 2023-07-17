@@ -51,7 +51,7 @@ const Roadmap = () => {
           <Text fontSize="25px" opacity="0.8" fontFamily="VT323">
             Developed with love by Wajid © 2023 |{" "}
           </Text>
-          <a href="#">
+          <a href="https://twitter.com/abdulwajidsid" target="_blank">
             <img
               src={Twitter}
               alt="Twitter"
