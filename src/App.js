@@ -8,6 +8,7 @@ import NavBar from "./NavBar";
 import Team from "./Team";
 import Roadmap from "./Roadmap";
 import ScrollToTopButton from "./ScrollToTopButton";
+import Fade from "react-reveal/Fade";
 
 const alchemyId = process.env.SEPOLIA_PRIVATE_KEY;
 const walletConnectProjectId = process.env.WALLETCONNECT_PROJECT_ID;
@@ -32,10 +33,14 @@ const App = () => {
             <PublicMint name="mint" />
           </div>
           <div className="bg-image img2">
-            <Team name="team" />
+            <Fade bottom>
+              <Team name="team" />
+            </Fade>
           </div>
           <div className="bg-image img3">
-            <Roadmap name="roadmap" />
+            <Fade bottom>
+              <Roadmap name="roadmap" />
+            </Fade>
           </div>
           <ScrollToTopButton />
         </ConnectKitProvider>
