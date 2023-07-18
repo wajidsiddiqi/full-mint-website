@@ -20,10 +20,6 @@ const StyledButton = styled.button`
 `;
 
 function NavBar() {
-  const mintRef = useRef(null);
-  const teamRef = useRef(null);
-  const roadmapRef = useRef(null);
-
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -43,7 +39,6 @@ function NavBar() {
       {/* Left side - Social media icons */}
       <Flex
         justify="space-around"
-        padding="0 10px"
         width={{ base: "100%", md: "40%" }}
         marginBottom={{ base: "10px", md: "0" }}
       >
@@ -62,7 +57,6 @@ function NavBar() {
       <Flex
         justify="space-between"
         align="center"
-        padding="0 10px"
         width={{ base: "100%", md: "60%" }}
       >
         <Flex justify="space-between" width={{ base: "60%", md: "auto" }}>
@@ -71,7 +65,7 @@ function NavBar() {
             to="mint"
             spy={true}
             smooth={true}
-            offset={-20}
+            offset={0}
             duration={200}
           >
             <Box margin="0 15px" cursor="pointer">
@@ -83,7 +77,7 @@ function NavBar() {
             to="team"
             spy={true}
             smooth={true}
-            offset={-20}
+            offset={0}
             duration={200}
           >
             <Box margin="0 15px" cursor="pointer">
@@ -95,7 +89,7 @@ function NavBar() {
             to="roadmap"
             spy={true}
             smooth={true}
-            offset={-20}
+            offset={0}
             duration={200}
           >
             <Box margin="0 15px" cursor="pointer">
