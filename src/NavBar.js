@@ -1,3 +1,5 @@
+import React, { useRef } from "react";
+import { Link as ScrollLink } from "react-scroll";
 import { useAccount, useDisconnect } from "wagmi";
 import { ConnectKitButton } from "connectkit";
 import { Box, Flex, Image, Button, Link, Spacer } from "@chakra-ui/react";
@@ -11,7 +13,6 @@ const StyledButton = styled.button`
   padding: 1rem;
   color: white;
   background-color: #d6517d;
-  border-radius: 5px;
   box-shadow: 0px 2px 2px 1px #0f0f0f;
   border-radius: 5px;
   font-family: inherit;
@@ -19,6 +20,10 @@ const StyledButton = styled.button`
 `;
 
 function NavBar() {
+  const mintRef = useRef(null);
+  const teamRef = useRef(null);
+  const roadmapRef = useRef(null);
+
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -61,15 +66,42 @@ function NavBar() {
         width={{ base: "100%", md: "60%" }}
       >
         <Flex justify="space-between" width={{ base: "60%", md: "auto" }}>
-          <Box margin="0 15px" cursor="pointer">
-            Mint
-          </Box>
-          <Box margin="0 15px" cursor="pointer">
-            Team
-          </Box>
-          <Box margin="0 15px" cursor="pointer">
-            Roadmap
-          </Box>
+          <ScrollLink
+            activeClass="active"
+            to="mint"
+            spy={true}
+            smooth={true}
+            offset={-20}
+            duration={200}
+          >
+            <Box margin="0 15px" cursor="pointer">
+              Mint
+            </Box>
+          </ScrollLink>
+          <ScrollLink
+            activeClass="active"
+            to="team"
+            spy={true}
+            smooth={true}
+            offset={-20}
+            duration={200}
+          >
+            <Box margin="0 15px" cursor="pointer">
+              Team
+            </Box>
+          </ScrollLink>
+          <ScrollLink
+            activeClass="active"
+            to="roadmap"
+            spy={true}
+            smooth={true}
+            offset={-20}
+            duration={200}
+          >
+            <Box margin="0 15px" cursor="pointer">
+              Roadmap
+            </Box>
+          </ScrollLink>
         </Flex>
 
         <Spacer />

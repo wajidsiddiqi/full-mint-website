@@ -8,6 +8,7 @@ const Roadmap = () => {
       minHeight="100vh"
       maxWidth="1600px"
       margin="auto"
+      name="roadmap"
     >
       <Flex
         justify="center"

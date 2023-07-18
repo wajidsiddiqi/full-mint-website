@@ -59,6 +59,7 @@ const PublicMint = () => {
       minHeight="100vh"
       maxWidth="1600px"
       margin="auto"
+      name="mint"
     >
       <Flex justify="center" align="center" flexGrow="1" padding="90px 2%">
         <Box width="520px">

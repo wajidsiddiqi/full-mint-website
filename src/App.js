@@ -1,11 +1,13 @@
+import React from "react";
+import { WagmiConfig, createConfig } from "wagmi";
+import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { sepolia } from "wagmi/chains";
 import "./App.css";
 import PublicMint from "./PublicMint";
 import NavBar from "./NavBar";
 import Team from "./Team";
 import Roadmap from "./Roadmap";
-import { WagmiConfig, createConfig } from "wagmi";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { sepolia } from "wagmi/chains";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 const alchemyId = process.env.SEPOLIA_PRIVATE_KEY;
 const walletConnectProjectId = process.env.WALLETCONNECT_PROJECT_ID;
@@ -27,14 +29,15 @@ const App = () => {
         <ConnectKitProvider theme="rounded">
           <div className="bg-image img1">
             <NavBar />
-            <PublicMint />
+            <PublicMint name="mint" />
           </div>
           <div className="bg-image img2">
-            <Team />
+            <Team name="team" />
           </div>
           <div className="bg-image img3">
-            <Roadmap />
+            <Roadmap name="roadmap" />
           </div>
+          <ScrollToTopButton />
         </ConnectKitProvider>
       </WagmiConfig>
     </div>
