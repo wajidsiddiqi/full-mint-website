@@ -61,31 +61,13 @@ function NavBar() {
         padding="10px 100px"
         margin="20px auto"
       >
-        {isOpen ? (
-          <Flex
-            justify="center"
-            width={{ base: "100%", md: "40%" }}
-            zIndex="999"
-            cursor="pointer"
-            color="white"
-            backgroundColor="#d6517d"
-            boxShadow="0px 2px 2px 1px #0f0f0f"
-            borderRadius="5px"
-            margin="0 1rem"
-            position="fixed"
-            top="20px"
-            left="215px"
-          >
-            <Hamburger toggled={isOpen} toggle={handleMenuToggle} size={24} />
-          </Flex>
-        ) : (
+        {isMobile && (
           <Flex
             justify="space-around"
             width={{ base: "100%", md: "40%" }}
             marginBottom={{ base: "10px", md: "0" }}
-            zIndex="999"
+            zIndex="997"
             cursor="pointer"
-            padding="1rem"
             color="white"
             backgroundColor="#d6517d"
             boxShadow="0px 2px 2px 1px #0f0f0f"
@@ -113,6 +95,29 @@ function NavBar() {
             transition="left 0.3s ease-in-out"
           >
             {/* Your menu content here */}
+            {isOpen && (
+              <Flex
+                justify="center"
+                width={{ base: "100%", md: "40%" }}
+                zIndex="999"
+                cursor="pointer"
+                color="white"
+                backgroundColor="#d6517d"
+                boxShadow="0px 2px 2px 1px #0f0f0f"
+                borderRadius="5px"
+                margin="0 1rem"
+                position="fixed"
+                top="20px"
+                left="215px"
+              >
+                <Hamburger
+                  toggled={isOpen}
+                  toggle={handleMenuToggle}
+                  size={24}
+                />
+              </Flex>
+            )}
+
             <ScrollLink
               activeClass="active"
               to="mint"
@@ -153,11 +158,7 @@ function NavBar() {
               </Box>
             </ScrollLink>
 
-            <Flex
-              justify="space-around"
-              width={{ base: "100%", md: "40%" }}
-              marginBottom={{ base: "10px", md: "0" }}
-            >
+            <Flex justify="space-around">
               <Link href="https://www.discord.com">
                 <Image src={Discord} boxSize="24px" margin="0 8px"></Image>
               </Link>
