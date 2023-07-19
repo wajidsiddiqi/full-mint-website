@@ -61,16 +61,29 @@ function NavBar() {
         padding="10px 100px"
         margin="20px auto"
       >
-        <Flex
-          justify="space-around"
-          width={{ base: "100%", md: "40%" }}
-          marginBottom={{ base: "10px", md: "0" }}
-          zIndex="999"
-        >
-          <Hamburger
-            toggled={isOpen}
-            toggle={handleMenuToggle}
-            size={24}
+        {isOpen ? (
+          <Flex
+            justify="center"
+            width={{ base: "100%", md: "40%" }}
+            zIndex="999"
+            cursor="pointer"
+            color="white"
+            backgroundColor="#d6517d"
+            boxShadow="0px 2px 2px 1px #0f0f0f"
+            borderRadius="5px"
+            margin="0 1rem"
+            position="fixed"
+            top="20px"
+            left="215px"
+          >
+            <Hamburger toggled={isOpen} toggle={handleMenuToggle} size={24} />
+          </Flex>
+        ) : (
+          <Flex
+            justify="space-around"
+            width={{ base: "100%", md: "40%" }}
+            marginBottom={{ base: "10px", md: "0" }}
+            zIndex="999"
             cursor="pointer"
             padding="1rem"
             color="white"
@@ -78,8 +91,10 @@ function NavBar() {
             boxShadow="0px 2px 2px 1px #0f0f0f"
             borderRadius="5px"
             margin="0 1rem"
-          />
-        </Flex>
+          >
+            <Hamburger toggled={isOpen} toggle={handleMenuToggle} size={24} />
+          </Flex>
+        )}
 
         {/* Hamburger Menu */}
         {isMobile && (
@@ -107,7 +122,7 @@ function NavBar() {
               duration={200}
               onClick={handleMenuClose}
             >
-              <Box margin="15px" cursor="pointer">
+              <Box margin="8px" cursor="pointer">
                 Mint
               </Box>
             </ScrollLink>
@@ -120,7 +135,7 @@ function NavBar() {
               duration={200}
               onClick={handleMenuClose}
             >
-              <Box margin="15px" cursor="pointer">
+              <Box margin="8px" cursor="pointer">
                 Team
               </Box>
             </ScrollLink>
@@ -133,29 +148,47 @@ function NavBar() {
               duration={200}
               onClick={handleMenuClose}
             >
-              <Box margin="15px" cursor="pointer">
+              <Box margin="8px" cursor="pointer">
                 Roadmap
               </Box>
             </ScrollLink>
+
+            <Flex
+              justify="space-around"
+              width={{ base: "100%", md: "40%" }}
+              marginBottom={{ base: "10px", md: "0" }}
+            >
+              <Link href="https://www.discord.com">
+                <Image src={Discord} boxSize="24px" margin="0 8px"></Image>
+              </Link>
+              <Link href="https://www.twitter.com">
+                <Image src={Twitter} boxSize="24px" margin="0 8px"></Image>
+              </Link>
+              <Link href="https://testnets.opensea.io/collection/robopunks-40">
+                <Image src={Opensea} boxSize="24px" margin="0 8px"></Image>
+              </Link>
+            </Flex>
           </Flex>
         )}
 
         {/* Left side - Social media icons */}
-        <Flex
-          justify="space-around"
-          width={{ base: "100%", md: "40%" }}
-          marginBottom={{ base: "10px", md: "0" }}
-        >
-          <Link href="https://www.discord.com">
-            <Image src={Discord} boxSize="32px" margin="0 15px"></Image>
-          </Link>
-          <Link href="https://www.twitter.com">
-            <Image src={Twitter} boxSize="32px" margin="0 15px"></Image>
-          </Link>
-          <Link href="https://testnets.opensea.io/collection/robopunks-40">
-            <Image src={Opensea} boxSize="32px" margin="0 15px"></Image>
-          </Link>
-        </Flex>
+        {!isMobile && (
+          <Flex
+            justify="space-around"
+            width={{ base: "100%", md: "40%" }}
+            marginBottom={{ base: "10px", md: "0" }}
+          >
+            <Link href="https://www.discord.com">
+              <Image src={Discord} boxSize="32px" margin="0 15px"></Image>
+            </Link>
+            <Link href="https://www.twitter.com">
+              <Image src={Twitter} boxSize="32px" margin="0 15px"></Image>
+            </Link>
+            <Link href="https://testnets.opensea.io/collection/robopunks-40">
+              <Image src={Opensea} boxSize="32px" margin="0 15px"></Image>
+            </Link>
+          </Flex>
+        )}
 
         {/* Right side - sections and connect button */}
         <Flex
