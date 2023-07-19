@@ -62,9 +62,13 @@ const PublicMint = () => {
       name="mint"
     >
       <Flex justify="center" align="center" flexGrow="1" padding="90px 2%">
-        <Box width="520px">
+        <Box width="520px" className="firstContainer">
           <div>
-            <Text fontSize="40px" textShadow="0 5px #000000">
+            <Text
+              fontSize="40px"
+              textShadow="0 5px #000000"
+              className="firstHeading"
+            >
               RoboPunks
             </Text>
             <Text
@@ -72,6 +76,7 @@ const PublicMint = () => {
               letterSpacing="-5.5%"
               fontFamily="VT323"
               textShadow="0 2px 2px #000000"
+              className="firstPara"
             >
               This is my full-stack NFT portfolio development project, created
               using Solidity, Hardhat, React, WAGMI, Chakra, and various other
