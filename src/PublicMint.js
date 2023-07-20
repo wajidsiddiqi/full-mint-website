@@ -136,44 +136,50 @@ const PublicMint = () => {
                 {isLoading ? "MINTING..." : "MINT NOW!"}
               </Button>
               {isSuccess && (
-                <Text
-                  className="notifyText"
-                  fontFamily="VT323"
-                  textShadow="0 3px #000000"
-                  color="#2bd42b"
-                >
-                  Successfully minted your NFT!
-                  <Spacer />
+                <Flex align="center" justify="center">
                   <Text
-                    color="white"
                     className="notifyText"
                     fontFamily="VT323"
                     textShadow="0 3px #000000"
+                    color="#2bd42b"
                   >
-                    View on
-                    <a
-                      href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
-                      style={{
-                        textDecoration: "none",
-                        color: "#D6517D",
-                      }}
+                    Successfully minted your NFT!
+                    <Spacer />
+                    <Text
+                      color="white"
+                      className="notifyText"
+                      fontFamily="VT323"
+                      textShadow="0 3px #000000"
                     >
-                      Etherscan
-                    </a>
+                      View on{" "}
+                      <a
+                        href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
+                        target="_blank"
+                        style={{
+                          textDecoration: "none",
+                          color: "#D6517D",
+                        }}
+                      >
+                        Etherscan
+                      </a>
+                    </Text>
                   </Text>
-                </Text>
+                </Flex>
               )}
               {(isPrepareError || isError) && (
-                <Text
-                  className="notifyText"
-                  fontFamily="VT323"
-                  textShadow="0 3px #000000"
-                  marginTop="35px"
-                  color="red"
-                >
-                  Error:{" "}
-                  {extractErrorReason(prepareError?.message) || error?.message}
-                </Text>
+                <Flex align="center" justify="center">
+                  <Text
+                    className="notifyText"
+                    fontFamily="VT323"
+                    textShadow="0 3px #000000"
+                    marginTop="35px"
+                    color="red"
+                  >
+                    Error:{" "}
+                    {extractErrorReason(prepareError?.message) ||
+                      error?.message}
+                  </Text>
+                </Flex>
               )}
             </div>
           ) : (

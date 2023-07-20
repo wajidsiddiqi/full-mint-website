@@ -163,13 +163,16 @@ function NavBar() {
 
             <Flex justify="center" width="100%" p="2rem">
               {/* Footer container */}
-              <Link href="https://www.discord.com">
+              <Link href="https://www.discord.com" target="_blank">
                 <Image src={Discord} boxSize="24px" margin="0 8px"></Image>
               </Link>
-              <Link href="https://www.twitter.com">
+              <Link href="https://www.twitter.com" target="_blank">
                 <Image src={Twitter} boxSize="24px" margin="0 8px"></Image>
               </Link>
-              <Link href="https://testnets.opensea.io/collection/robopunks-40">
+              <Link
+                href="https://testnets.opensea.io/collection/robopunks-40"
+                target="_blank"
+              >
                 <Image src={Opensea} boxSize="24px" margin="0 8px"></Image>
               </Link>
             </Flex>
@@ -183,13 +186,16 @@ function NavBar() {
             width={{ base: "100%", md: "40%" }}
             marginBottom={{ base: "10px", md: "0" }}
           >
-            <Link href="https://www.discord.com">
+            <Link href="https://www.discord.com" target="_blank">
               <Image src={Discord} boxSize="32px" margin="0 15px"></Image>
             </Link>
-            <Link href="https://www.twitter.com">
+            <Link href="https://www.twitter.com" target="_blank">
               <Image src={Twitter} boxSize="32px" margin="0 15px"></Image>
             </Link>
-            <Link href="https://testnets.opensea.io/collection/robopunks-40">
+            <Link
+              href="https://testnets.opensea.io/collection/robopunks-40"
+              target="_blank"
+            >
               <Image src={Opensea} boxSize="32px" margin="0 15px"></Image>
             </Link>
           </Flex>
