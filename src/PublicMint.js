@@ -136,41 +136,44 @@ const PublicMint = () => {
                 {isLoading ? "MINTING..." : "MINT NOW!"}
               </Button>
               {isSuccess && (
-                <Flex align="center" justify="center">
+                <Text
+                  className="notifyText"
+                  fontFamily="VT323"
+                  textShadow="0 3px #000000"
+                  color="#2bd42b"
+                >
+                  Successfully minted your NFT!
+                  <Spacer />
                   <Text
+                    color="white"
                     className="notifyText"
                     fontFamily="VT323"
                     textShadow="0 3px #000000"
-                    color="#2bd42b"
                   >
-                    Successfully minted your NFT!
-                    <Spacer />
+                    View on
                     <a
                       href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
                       style={{
-                        color: "#D6517D",
                         textDecoration: "none",
+                        color: "#D6517D",
                       }}
                     >
                       Etherscan
                     </a>
                   </Text>
-                </Flex>
+                </Text>
               )}
               {(isPrepareError || isError) && (
-                <Flex align="center" justify="center">
-                  <Text
-                    className="notifyText"
-                    fontFamily="VT323"
-                    textShadow="0 3px #000000"
-                    marginTop="35px"
-                    color="red"
-                  >
-                    Error:{" "}
-                    {extractErrorReason(prepareError?.message) ||
-                      error?.message}
-                  </Text>
-                </Flex>
+                <Text
+                  className="notifyText"
+                  fontFamily="VT323"
+                  textShadow="0 3px #000000"
+                  marginTop="35px"
+                  color="red"
+                >
+                  Error:{" "}
+                  {extractErrorReason(prepareError?.message) || error?.message}
+                </Text>
               )}
             </div>
           ) : (
