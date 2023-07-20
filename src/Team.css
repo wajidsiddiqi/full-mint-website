@@ -70,10 +70,6 @@
 }
 
 @media (max-width: 420px) {
-  .team {
-    height: auto;
-  }
-
   .center h1 {
     font-size: 34px;
   }
@@ -84,5 +80,10 @@
 
   .box h5 {
     font-size: 19px;
+  }
+}
+@media (max-width: 895px) {
+  .team {
+    height: auto;
   }
 }
