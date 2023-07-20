@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 90px 2%;
 }
 .team-content {
   width: 60%;
@@ -68,13 +69,20 @@
   cursor: pointer;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 420px) {
   .team {
-    width: 100%;
     height: auto;
-    padding: 90px 2%;
   }
+
   .center h1 {
-    font-size: 40px;
+    font-size: 34px;
+  }
+
+  .box h3 {
+    font-size: 12px;
+  }
+
+  .box h5 {
+    font-size: 19px;
   }
 }

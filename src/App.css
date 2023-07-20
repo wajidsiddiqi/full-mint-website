@@ -74,3 +74,67 @@ body::-webkit-scrollbar-thumb:hover {
 .scroll-to-top:hover {
   background-color: #d6517d;
 }
+
+/* Default styles */
+.firstContainer {
+  max-width: 520px;
+}
+
+.DekstopPadding {
+  padding: 10px 100px;
+}
+
+.firstHeading {
+  font-size: 40px;
+}
+
+.firstPara {
+  font-size: 30px;
+}
+
+.notifyText {
+  font-size: 30px;
+}
+
+.footer {
+  font-size: 25px;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 420px) {
+  .firstContainer {
+    max-width: 350px;
+  }
+
+  .firstHeading {
+    font-size: 34px;
+  }
+
+  .firstPara {
+    font-size: 24px;
+  }
+
+  .notifyText {
+    font-size: 26px;
+  }
+
+  .navbarMobilePadding {
+    padding: 10px 15px;
+  }
+
+  .footer {
+    font-size: 19px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .scroll-to-top {
+    bottom: 90px;
+  }
+}
+
+@media screen and (max-width: 945px) {
+  .navbarMobilePadding {
+    padding: 10px 15px;
+  }
+}

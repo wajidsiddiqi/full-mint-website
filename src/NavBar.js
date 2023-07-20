@@ -8,6 +8,7 @@ import Discord from "./assets/social-media-icons/discord.png";
 import Opensea from "./assets/social-media-icons/opensea.png";
 import styled from "styled-components";
 import Hamburger from "hamburger-react";
+import "./App.css";
 
 const StyledButton = styled.button`
   cursor: pointer;
@@ -58,8 +59,8 @@ function NavBar() {
         left="0"
         right="0"
         maxWidth="1600px"
-        padding="10px 100px"
         margin="20px auto"
+        className="navbarMobilePadding DekstopPadding"
       >
         {isMobile && (
           <Flex
@@ -101,8 +102,8 @@ function NavBar() {
                 width={{ base: "100%", md: "40%" }}
                 zIndex="999"
                 cursor="pointer"
-                color="white"
-                backgroundColor="#d6517d"
+                color="#d6517d"
+                backgroundColor="white"
                 boxShadow="0px 2px 2px 1px #0f0f0f"
                 borderRadius="5px"
                 margin="0 1rem"
@@ -118,47 +119,50 @@ function NavBar() {
               </Flex>
             )}
 
-            <ScrollLink
-              activeClass="active"
-              to="mint"
-              spy={true}
-              smooth={true}
-              offset={0}
-              duration={200}
-              onClick={handleMenuClose}
-            >
-              <Box margin="8px" cursor="pointer">
-                Mint
-              </Box>
-            </ScrollLink>
-            <ScrollLink
-              activeClass="active"
-              to="team"
-              spy={true}
-              smooth={true}
-              offset={0}
-              duration={200}
-              onClick={handleMenuClose}
-            >
-              <Box margin="8px" cursor="pointer">
-                Team
-              </Box>
-            </ScrollLink>
-            <ScrollLink
-              activeClass="active"
-              to="roadmap"
-              spy={true}
-              smooth={true}
-              offset={0}
-              duration={200}
-              onClick={handleMenuClose}
-            >
-              <Box margin="8px" cursor="pointer">
-                Roadmap
-              </Box>
-            </ScrollLink>
+            <Box mt="3rem">
+              <ScrollLink
+                activeClass="active"
+                to="mint"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={200}
+                onClick={handleMenuClose}
+              >
+                <Box margin="10px" cursor="pointer">
+                  Mint
+                </Box>
+              </ScrollLink>
+              <ScrollLink
+                activeClass="active"
+                to="team"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={200}
+                onClick={handleMenuClose}
+              >
+                <Box margin="10px" cursor="pointer">
+                  Team
+                </Box>
+              </ScrollLink>
+              <ScrollLink
+                activeClass="active"
+                to="roadmap"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={200}
+                onClick={handleMenuClose}
+              >
+                <Box margin="10px" cursor="pointer">
+                  Roadmap
+                </Box>
+              </ScrollLink>
+            </Box>
 
-            <Flex justify="space-around">
+            <Flex justify="center" width="100%" p="2rem">
+              {/* Footer container */}
               <Link href="https://www.discord.com">
                 <Image src={Discord} boxSize="24px" margin="0 8px"></Image>
               </Link>

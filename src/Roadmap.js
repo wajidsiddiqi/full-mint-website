@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Twitter from "./assets/social-media-icons/twitter.png";
+import "./App.css";
 
 const Roadmap = () => {
   return (
@@ -16,13 +17,13 @@ const Roadmap = () => {
         flexGrow="1"
         padding="90px 2% 30px 2%"
       >
-        <Box width="520px">
+        <Box className="firstContainer">
           <div>
-            <Text fontSize="40px" textShadow="0 5px #000000">
+            <Text className="firstHeading" textShadow="0 5px #000000">
               Roadmap
             </Text>
             <Text
-              fontSize="30px"
+              className="firstPara"
               letterSpacing="-5.5%"
               fontFamily="VT323"
               textShadow="0 2px 2px #000000"
@@ -49,7 +50,7 @@ const Roadmap = () => {
       </Flex>
       <Box as="footer" py="4" textAlign="center">
         <Flex justifyContent="center" alignItems="center">
-          <Text fontSize="25px" opacity="0.8" fontFamily="VT323">
+          <Text opacity="0.8" fontFamily="VT323" className="footer">
             Developed with love by Wajid © 2023 |{" "}
           </Text>
           <a href="https://twitter.com/abdulwajidsid" target="_blank">

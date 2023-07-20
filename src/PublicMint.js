@@ -1,3 +1,4 @@
+import "./App.css";
 import { useState } from "react";
 import { ethers } from "ethers";
 import { Box, Flex, Input, Button, Text, Spacer } from "@chakra-ui/react";
@@ -62,21 +63,16 @@ const PublicMint = () => {
       name="mint"
     >
       <Flex justify="center" align="center" flexGrow="1" padding="90px 2%">
-        <Box width="520px" className="firstContainer">
+        <Box className="firstContainer">
           <div>
-            <Text
-              fontSize="40px"
-              textShadow="0 5px #000000"
-              className="firstHeading"
-            >
+            <Text textShadow="0 5px #000000" className="firstHeading">
               RoboPunks
             </Text>
             <Text
-              fontSize="30px"
+              className="firstPara"
               letterSpacing="-5.5%"
               fontFamily="VT323"
               textShadow="0 2px 2px #000000"
-              className="firstPara"
             >
               This is my full-stack NFT portfolio development project, created
               using Solidity, Hardhat, React, WAGMI, Chakra, and various other
@@ -142,7 +138,7 @@ const PublicMint = () => {
               {isSuccess && (
                 <Flex align="center" justify="center">
                   <Text
-                    fontSize="30px"
+                    className="notifyText"
                     fontFamily="VT323"
                     textShadow="0 3px #000000"
                     color="#2bd42b"
@@ -164,7 +160,7 @@ const PublicMint = () => {
               {(isPrepareError || isError) && (
                 <Flex align="center" justify="center">
                   <Text
-                    fontSize="25px"
+                    className="notifyText"
                     fontFamily="VT323"
                     textShadow="0 3px #000000"
                     marginTop="35px"
@@ -179,7 +175,7 @@ const PublicMint = () => {
             </div>
           ) : (
             <Text
-              fontSize="30px"
+              className="notifyText"
               letterSpacing="-5.5%"
               fontFamily="VT323"
               textShadow="0 3px #000000"
