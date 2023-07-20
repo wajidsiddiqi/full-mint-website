@@ -3,11 +3,11 @@ import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { sepolia } from "wagmi/chains";
 import "./App.css";
-import PublicMint from "./PublicMint";
-import NavBar from "./NavBar";
-import Team from "./Team";
-import Roadmap from "./Roadmap";
-import ScrollToTopButton from "./ScrollToTopButton";
+import PublicMint from "./components/PublicMint";
+import NavBar from "./components/NavBar";
+import Team from "./components/Team";
+import Roadmap from "./components/Roadmap";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import Fade from "react-reveal/Fade";
 
 const alchemyId = process.env.SEPOLIA_PRIVATE_KEY;
