@@ -6,7 +6,7 @@ import {
   useWaitForTransaction,
   useAccount,
 } from "wagmi";
-import RoboPunksNFT from "./RoboPunksNFT.json";
+import RoboPunksNFT from "../RoboPunksNFT.json";
 
 const contractAddress = "0xafba542846406CE66D3d1b2773d0237fb993af43";
 const mintPrice = "0.04";
